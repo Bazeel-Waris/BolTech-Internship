@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+
+    <!-- Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- FontAwsome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <section class="main">
+        <!-- Login Section Image -->
+        <div class="main__image">
+            <img src="./img-01.webp" alt="">
+        </div>
+
+        <!-- Login Form -->
+        <div class="main__login">
+            <!-- Login Form Heading -->
+            <h2 class="main__login--heading">Member Login</h2>
+
+            <!-- Login Form -->
+            <form class="main__login--form" action="">
+
+                <div class="login__form--input">
+                    <i class="fa-solid fa-user"></i>
+                    <input type="text" placeholder="Username" id="username" required/>
+                </div>
+
+                <div class="login__form--input">
+                    <i class="fa-solid fa-lock"></i>
+                    <input type="password" placeholder="Password" id="password" required />
+                </div>
+
+                <div class="login__form--input">
+                    <button class="login__form--btn" type="submit" id="signInBtn">SIGN IN</button>
+                </div>
+                
+            </form>
+
+        </div>
+    </section>
+</body>
+<script src="./app.js"></script>
+</html>

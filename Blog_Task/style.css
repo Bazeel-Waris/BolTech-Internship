@@ -1,0 +1,117 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* || Poppins Bold Font */
+@font-face {
+    font-family: poppins;
+    src: url('./fonts/Poppins/Poppins-Bold.ttf');
+}
+
+/* || Poppins Medium Font */
+@font-face {
+    font-family: poppins-medium;
+    src: url('./fonts/Poppins/Poppins-Medium.ttf');
+}
+
+/* || Montserrat Variable Font*/
+@font-face {
+    font-family: montserrat;
+    src: url('./fonts/Montserrat/Montserrat-VariableFont_wght.ttf');
+}
+
+/* || Main Body Section */
+body {
+    height: 100vh;
+    background-image: linear-gradient(-135deg, #c850c0, #4158d0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* || Login Section Main */
+.main {
+    background-color: #fff;
+    width: 68%;
+    border-radius: 20px;
+    padding: 10rem 6rem;
+    display: flex;
+    justify-content: space-around;
+}
+
+.main__login--heading {
+    font-family: poppins;
+    color: #333333;
+    font-size: 1.5rem;
+    padding: 0 3.1rem 3.1rem 3.1rem;
+}
+
+/* || Main Login Section */
+.main__login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin: 0 auto; */
+    width: 35%;
+    /* justify-content: ; */
+}
+
+/* || Main Login From */
+.main__login--form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.login__form--input {
+    width: 100%;
+    position: relative;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.login__form--input input{
+    width: 100%;
+    line-height: 1.6;
+    font-size: 1rem;
+    padding: 0.8rem 2rem 0.8rem 5rem;
+    background-color: #e6e6e6;
+    font-family: poppins-medium;
+    border-radius: 30px;
+    border: 2px solid transparent;
+}
+
+.login__form--input input:focus{
+    border: 2px solid #57B846;
+    outline: none;
+}
+
+.login__form--input i{
+    color: #666666;
+    position: absolute;
+    left: 0;
+    padding-left: 2.1rem;
+    /* bottom: 0; */
+}
+
+/* || Login Form Button */
+.login__form--btn {
+    background-color: #57B846;
+    color: #fff;
+    border: none;
+    font-family: montserrat;
+    font-weight: 700;
+    font-size: 1rem;
+    width: 100%;
+    border-radius: 30px;
+    padding: 0.8rem 0;
+    margin: 1.5rem 0;
+    transition: all 0.4s;
+}
+
+.login__form--btn:hover {
+    background-color: rgb(51, 51, 51);
+}
