@@ -44,7 +44,7 @@ function userSignIn (e) {
             console.log(localStorage.getItem('lastName'));
             console.log(localStorage.getItem('token'));
             
-            window.location.assign('/newsFeed.html');
+            window.location.assign('../news-feed.html');
 
         }
 

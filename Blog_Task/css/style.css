@@ -7,19 +7,19 @@
 /* || Poppins Bold Font */
 @font-face {
     font-family: poppins;
-    src: url('./fonts/Poppins/Poppins-Bold.ttf');
+    src: url('../fonts/Poppins/Poppins-Bold.ttf');
 }
 
 /* || Poppins Medium Font */
 @font-face {
     font-family: poppins-medium;
-    src: url('./fonts/Poppins/Poppins-Medium.ttf');
+    src: url('../fonts/Poppins/Poppins-Medium.ttf');
 }
 
 /* || Montserrat Variable Font*/
 @font-face {
     font-family: montserrat;
-    src: url('./fonts/Montserrat/Montserrat-VariableFont_wght.ttf');
+    src: url('../fonts/Montserrat/Montserrat-VariableFont_wght.ttf');
 }
 
 /* || Main Body Section */
@@ -94,7 +94,6 @@ body {
     position: absolute;
     left: 0;
     padding-left: 2.1rem;
-    /* bottom: 0; */
 }
 
 /* || Login Form Button */

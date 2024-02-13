@@ -1,0 +1,232 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* || Poppins Bold Font */
+@font-face {
+    font-family: poppins;
+    src: url('../fonts/Poppins/Poppins-Bold.ttf');
+}
+
+/* || Poppins Medium Font */
+@font-face {
+    font-family: poppins-medium;
+    src: url('../fonts/Poppins/Poppins-Medium.ttf');
+}
+
+/* || Montserrat Variable Font*/
+@font-face {
+    font-family: montserrat;
+    src: url('../fonts/Montserrat/Montserrat-VariableFont_wght.ttf');
+}
+
+body {
+    background-color: #ebecf0a5;
+}
+
+/* || Header */
+.header {
+    background-color: #0389C9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.7rem 3rem;
+    color: #fff;
+}
+
+.header__search {
+    flex: 0 0 30%;
+}
+
+.header__search--searchbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.header__search--searchbar > #search--icon{
+    position: absolute;
+    padding: 1rem;
+}
+
+.header__search--searchbar > #search-field {
+    border: none;
+    outline: none;
+    padding: 1rem 1rem 1rem 3rem;
+    font-family: montserrat;
+    width: 100%;
+    background-color:#1D95CF;
+    border-radius: 25px;
+    color: #fff;
+}
+
+.header__search--searchbar > #search-field::placeholder {
+    color: #fff;
+}
+
+.header__search--searchbar > #search-field:focus {
+    box-shadow: 0px 0px 3px 1px #fff;
+}
+
+.header__navbar .navbar__menu {
+    list-style-type: none;
+    display: flex;
+}
+
+.navbar__menu a{
+    text-decoration: none;
+} 
+
+.navbar__menu--item{
+    color: #fff;
+    padding: 0.8rem 2rem;
+    font-family: poppins-medium;
+} 
+
+.navbar__menu--item:hover{
+    background-color: #1D95CF;
+    border-radius: 5px;
+} 
+
+#post-count {
+    background-color: #1D95CF;
+    font-size: 0.9rem;
+    font-family: montserrat;
+    padding: 0.8rem 1.3rem;
+    border-radius: 5px;
+    margin-left: 4rem;
+}
+
+#post-count span {
+    font-size: 1.08rem;
+    font-weight: 600;
+    padding-right: 0.2rem 0.2rem 0 0;
+}
+
+/* || Content */
+.content {
+    display: flex;
+    justify-content: center;
+}
+
+.content__posts {
+    width: 60%;
+}
+
+/* || Single Post */
+.posts__singlePost {
+    background-color: #fff;
+    padding: 1.5rem;
+    margin: 1rem;
+    border-radius: 20px;
+}
+
+.singlePost__userInfo {
+    display: flex;
+    font-family: montserrat;
+    font-size: 0.8rem;
+}
+
+.singlePost__userInfo > img {
+    width: 2.8rem;
+}
+
+.singlePost__userInfo--name {
+    margin-left: 0.7rem;
+    padding: 0.4rem;
+}
+
+.singlePost__userInfo--name p {
+    color: #adb5bd;
+    font-family: montserrat;
+}
+
+.singlePost__content {
+    padding: 1rem 0.3rem 0 0.3rem;
+}
+
+.singlePost__content p {
+    color: #adb5bd;
+    line-height: 1.5;
+    font-family: montserrat;
+}
+
+.singlePost__content > p > a{
+    text-decoration: none;
+    color: #0389C9;
+    font-weight: 500;
+    transition: all 1.4s;
+}
+
+.singlePost__content > p > a:hover{
+    text-decoration: underline;
+}
+
+.call_to_act {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0 0 0;
+    padding: 0.5rem 0;
+    border-top: 1px solid #adb5bd45;
+}
+
+.call_to_act ul {
+    list-style-type: none;
+    display: flex;
+    font-family: montserrat;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.call_to_act ul > li:nth-child(2) {
+    margin: 0 0 0 1.5rem;
+}
+
+.reactions {
+    color: #212529;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.reactions__thumb {
+    color: #0389C9;
+}
+
+/* || Single Post Call to Action */
+.call-to-act__edit-delete > li{
+    padding: 0.8rem 1rem;
+    border-radius: 10px;
+    color: #fff;
+    /* width: 3.1rem; */
+    transition: all 0.4s;
+}
+
+
+#deleteBtn > i {
+    font-size: 18px;
+}
+
+#editBtn {
+    background-color: #0389C9;
+    border: 2px solid #0389C9;
+}
+
+#editBtn:hover {
+    color: #0389C9;
+    background-color: #fff;
+    border: 2px solid #0389C9;
+}
+
+#deleteBtn {
+    background-color: #FF3B30;
+    border: 2px solid #FF3B30;
+}
+
+#deleteBtn:hover {
+    color: #FF3B30;
+    background-color: #fff;
+}
