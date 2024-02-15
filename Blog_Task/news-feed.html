@@ -37,7 +37,36 @@
         </nav>
     </header>
 
+    <!-- Posts Tabs & Posts Content -->
     <section class="content">
+
+        <!-- Add Post -->
+        <div class="addPost">
+            <!-- <div class="addPost__content"> -->
+                <h2>Create Post</h2>
+                <form id="addPost__form" method="POST">
+                    <div class="addPost__form--title">
+                        <input type="text" placeholder="Post Title">
+                    </div>
+                    <div class="addPost__form--description">
+                        <textarea rows="5" placeholder="Write Something Here..."></textarea>
+                    </div>
+                    <div class="addPost__form--btn">
+                        <input type="submit" value="ADD POST" />
+                    </div>
+                </form>
+            <!-- </div> -->
+        </div>
+
+        <!-- Content Tabs -->
+        <div class="content__tabs">
+            <div class="allPosts__tab">
+                All Posts
+            </div>
+            <div class="myPosts__tab">
+                My Posts
+            </div>
+        </div>
 
         <!-- All Posts -->
         <div id="post-container" class="content__posts"></div>
@@ -46,24 +75,10 @@
 
     <!-- Comments Pop-UP -->
     <section class="comments">
-        <div class="post__comments">
-            <!-- Close Button -->
-            <div id="post__comments--close">
-                <i class="fa-solid fa-rectangle-xmark"></i>
-            </div>
 
-            <!-- Post's User Information -->
-            <div class="post__comments--userInfo">
-                <img src="./images/user.png" alt="">
-                <div class="post__comments--userInfo-name">
-                    <h4>Ahmad Bin Waris</h4>
-                    <p>
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Possimus, libero.
-                    </p>
-                </div>
-            </div>
+        <!-- Comments TO Display Here By JavaScript -->
+        <div class="post__comments"></div>
 
-        </div>
     </section>
 </body>
 
