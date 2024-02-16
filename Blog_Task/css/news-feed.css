@@ -119,29 +119,34 @@ body {
 }
 
 /* || ADD Post Form */
-.addPost {
+.addPost, .editPost {
     background-color: #fff;
     width: 58%;
     padding: 1.3rem;
     margin: 1rem 2rem;
     border-radius: 15px;
+    height: auto;
 }
 
-.addPost h2 {
+.editPost {
+    width: auto;
+}
+
+.addPost h2, .editPost h2 {
     font-family: poppins;
     color: #373c41;
 }
 
-#addPost__form {
+#addPost__form, #editPost__form {
     width: 100%;
 }
 
-.addPost__form--title {
+.addPost__form--title, .editPost__form--title{
     width: 100%;
     margin: 1rem 0;
 }
 
-.addPost__form--title input {
+.addPost__form--title input, .editPost__form--title input {
     width: 100%;
     padding: 1rem;
     border-radius: 5px;
@@ -150,7 +155,7 @@ body {
     outline: none;
 }
 
-.addPost__form--description textarea {
+.addPost__form--description textarea, .editPost__form--description textarea{
     width: 100%;
     border: none;
     background-color: #EDF7FB;
@@ -159,11 +164,11 @@ body {
     outline: none;
 }
 
-.addPost__form--btn {
+.addPost__form--btn, .editPost__form--btn {
     margin: 1rem 0;
 }
 
-.addPost__form--btn input {
+.addPost__form--btn input, .editPost__form--btn input{
     background-color: #0389C9;
     color: #fff;
     outline: none;
@@ -176,7 +181,7 @@ body {
     transition: all 0.4s;
 }
 
-.addPost__form--btn input:hover {
+.addPost__form--btn input:hover, .editPost__form--btn input:hover {
     background-color: #fff;
     color: #0389C9;
     outline: none;
@@ -360,6 +365,18 @@ body {
 }
 
 /* || Comments Pop-Up */
+.edit {
+    display: flex;
+    background-color: #038ac91e;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    align-items: center;
+    display: none;
+}
 
 .comments {
     display: flex;
@@ -374,7 +391,7 @@ body {
     display: none;
 }
 
-.post__comments {
+.post__comments, .edit__post {
     width: 58%;
     background-color: #fff;
     padding: 1rem;
@@ -383,6 +400,11 @@ body {
     flex-direction: column;
     height: 50vh;
     overflow-y: scroll;
+}
+
+.edit__post {
+    height: auto;
+    overflow: auto;
 }
 
 #post__comments--close {

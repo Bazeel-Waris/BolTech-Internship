@@ -2,6 +2,7 @@
 const postsContent = document.getElementById('post-container');
 const postCount = document.querySelector('#post-count > span');
 const likesCount = document.getElementById('reactions__likes');
+const contentSection = document.querySelector('.content');
 
 // Variables to get Comments & its Pop-Up Elements
 const commentsPopUp = document.querySelector('.comments');
@@ -14,6 +15,13 @@ const myPostsBtn = document.querySelector('.myPosts__tab');
 
 // Add Post Variables
 const form = document.getElementById('addPost__form');
+
+// variable for search field
+const searchBar = document.getElementById('search-field');
+
+// Edit Section Variables
+// Getting Edit Section in the required Variable
+const EditScreenBtn = document.querySelector('.edit');
 
 // Global Array for Local Storage
 let newPosts = [];
@@ -45,7 +53,7 @@ function addPost(event) {
             title: postTitle.value,
             body: postBody.value,
             userId: JSON.parse(localStorage.getItem('loggedInUser')).id,
-            reactions: 1
+            reactions: 0
         })
     };
    
@@ -129,7 +137,7 @@ function getMyPosts() {
 
                         <!-- Edit & Delete -->
                         <ul class="call-to-act__edit-delete">
-                            <li id="editBtn"><i class="fa-regular fa-pen-to-square"></i></li>
+                            <li id="editBtn" onclick="editPost(${post.id});"><i class="fa-regular fa-pen-to-square"></i></li>
                             <li id="deleteBtn" onclick="deletePost(${post.id}, this)"><i class="fa-solid fa-trash"></i></li>
                         </ul>
 
@@ -198,7 +206,7 @@ function getAllPosts() {
    
 }
 
-getAllPosts();
+// getAllPosts();
 
 // Event Listener to display All the Posts of Current User
 allPostsBtn.addEventListener('click', getAllPosts);
@@ -461,6 +469,187 @@ function deletePost(postId, e) {
     
 }
 
-function updatePost() {
-    
+function editPost(postId) {
+
+    const localBrowserPost = JSON.parse(localStorage.getItem('newPosts'));
+
+    const browserPostIDs = localBrowserPost.map(post => post.id);
+
+    EditScreenBtn.style.display = 'flex';
+
+    if(browserPostIDs.includes(postId)) {
+
+        // Finding the post to be Edited from LocalStorage
+        const currentActivePost = localBrowserPost.find(post => post.id === postId);
+
+        // HTML Component for Edit Screen
+        const editScreenHTML = `
+                    <div class="editPost">
+                        <h2>Edit Post</h2>
+                        <form id="editPost__form" method="PUT">
+                            <div class="editPost__form--title">
+                                <input type="text" value="${currentActivePost.title}"/>
+                            </div>
+                            <div class="editPost__form--description">
+                                <textarea rows="5">${currentActivePost.body}</textarea>
+                            </div>
+                            <div class="editPost__form--btn">
+                                <input type="button" onclick="updatePost(${postId});" value="UPDATE POST" />
+                            </div>
+                        </form>
+                    </div>
+                `;
+        EditScreenBtn.firstElementChild.innerHTML = editScreenHTML;
+
+    } else {
+
+        const getPostAPI = `https://dummyjson.com/posts/${postId}`;
+
+        fetch(getPostAPI)
+        .then(res => res.json())
+        .then(post => {
+           
+             // HTML Component for Edit Screen
+            const editScreenHTML = `
+                    <div class="editPost">
+                        <h2>Edit Post</h2>
+                        <form id="editPost__form" method="PUT">
+                            <div class="editPost__form--title">
+                                <input type="text" value="${post.title}"/>
+                            </div>
+                            <div class="editPost__form--description">
+                                <textarea rows="5">${post.body}</textarea>
+                            </div>
+                            <div class="editPost__form--btn">
+                                <input type="button" onclick="updatePost(${post.id});" value="UPDATE POST" />
+                            </div>
+                        </form>
+                    </div>
+                `;
+
+                EditScreenBtn.firstElementChild.innerHTML = editScreenHTML;
+        });
+        
+    }
+
 }
+
+function updatePost(postId) {
+
+    const editForm = EditScreenBtn.firstElementChild.firstElementChild.lastElementChild;
+    const editFormTitle = editForm.firstElementChild.firstElementChild;
+    const editFormBody = editForm.firstElementChild.nextElementSibling.firstElementChild;
+
+    const localBrowserPost = JSON.parse(localStorage.getItem('newPosts'));
+
+    const browserPostIDs = localBrowserPost.map(post => post.id);
+
+    // Checking that the post is from localhost or from API
+    if(browserPostIDs.includes(postId)) {
+
+        // const postContent = document.getElementById('post-container');
+        // const postTitle = postContent.firstElementChild.nextElementSibling.firstElementChild;
+        // const postBody = postContent.firstElementChild.nextElementSibling.lastElementChild;
+
+        const editingPost = localBrowserPost.find(post => post.id === postId);
+        const indexInLocalStorage = localBrowserPost.indexOf(editingPost);
+        editingPost.title = editFormTitle.value;
+        editingPost.body = editFormBody.value;
+        
+        localBrowserPost[indexInLocalStorage] = editingPost;
+        localStorage.setItem('newPosts', JSON.stringify(localBrowserPost));
+
+        // postTitle.innerText = editFormTitle.value;
+        // postBody.innerText = editFormBody.value;
+        // console.log(postTitle, postBody, postContent)
+        
+    } else {
+
+        const updatePostAPI = `https://dummyjson.com/posts/${postId}`;
+
+        const updatePostOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                title: editFormTitle.value,
+                body: editFormBody.value
+            })
+        };
+
+        fetch(updatePostAPI, updatePostOptions)
+        .then(res => res.json())
+        .then(updatedPost => {
+            console.log('Updated Successfully!');
+            console.log(updatedPost);
+        });
+    }
+    
+
+    EditScreenBtn.style.display = 'none';
+}
+
+function closeEditScreen(e) {
+   
+    if(e.currentTarget === e.target) {
+        e.currentTarget.style.display = 'none';
+    }
+}
+
+EditScreenBtn.addEventListener('click', closeEditScreen);
+
+function search(e) {
+    console.log(e.currentTarget.value);
+
+    const searchAPI = `https://dummyjson.com/posts/search?q=${e.currentTarget.value}`;
+
+    // const userDataAPI = `https://dummyjson.com/users/${post.userId}`
+    fetch(searchAPI)
+    .then(res => res.json())
+    .then(data => {
+        console.log(data.posts);
+        const posts = data.posts;
+
+        postsContent.innerHTML = '';
+        posts.forEach(post => {
+            // Displaying Single Post in the Post's News Feed Page
+                const postHTML = `
+                <div class="posts__singlePost">
+
+                    
+
+                    <!-- Post Content -->
+                    <div class="singlePost__content">
+                        <h1>${post.title}</h1>
+                        <p>
+                            ${post.body} <a href="#">See more</a>
+                        </p>
+                    </div>
+
+                    <!-- Post call to Actions -->
+                    <div class="call_to_act">
+                        <ul class="reactions">
+                            <li><span class="reactions__thumb"><i class="fa-solid fa-thumbs-up"></i></span> ${ (post.reactions > 1 && post.reactions !== undefined) ? post.reactions + ' likes': 1 + ' like' } </li>
+                            <li class="reaction__comments" onclick="getCommentsData(${post.id})"><i class="fa-regular fa-comment"></i> Comments</li>
+                        </ul>
+
+                        <!-- Edit & Delete -->
+                        <ul class="call-to-act__edit-delete">
+                        
+                        </ul>
+
+                    </div>
+                    
+                </div>
+            `;
+
+            postsContent.innerHTML += postHTML;
+        });
+        
+
+    });
+
+    
+    // console.log(contentSection);
+}
+
+searchBar.addEventListener('keyup', search);
