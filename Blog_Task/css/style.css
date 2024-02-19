@@ -25,7 +25,7 @@
 /* || Main Body Section */
 body {
     height: 100vh;
-    background-image: linear-gradient(-135deg, #c850c0, #4158d0);
+    background-image: linear-gradient(-135deg, #038ac963, #0389C9);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -35,6 +35,7 @@ body {
 .main {
     background-color: #fff;
     width: 68%;
+    /* color: t; */
     border-radius: 20px;
     padding: 10rem 6rem;
     display: flex;
@@ -85,7 +86,7 @@ body {
 }
 
 .login__form--input input:focus{
-    border: 2px solid #57B846;
+    border: 2px solid #0389C9;
     outline: none;
 }
 
@@ -98,7 +99,7 @@ body {
 
 /* || Login Form Button */
 .login__form--btn {
-    background-color: #57B846;
+    background-color: #0389C9;
     color: #fff;
     border: none;
     font-family: montserrat;

@@ -1,6 +1,9 @@
 // Variables for Post Elements
 const postsContent = document.getElementById('post-container');
 const postCount = document.querySelector('#post-count > span');
+// Logout Button
+const logoutBtn = document.getElementById('logout');
+
 const likesCount = document.getElementById('reactions__likes');
 const contentSection = document.querySelector('.content');
 
@@ -29,7 +32,7 @@ let newPosts = [];
 // Global Array for Concatenating
 let totalPosts = [];
 
-// 
+// Initializing Posts to Local Storage!
 if(localStorage.getItem('newPosts') === null) {
     localStorage.setItem('newPosts', newPosts);
 }
@@ -103,7 +106,7 @@ function getMyPosts() {
 
         // Concatenating Local Storage Array of Posts & Arrays from Posts API
         totalPosts = [...newPosts, ...data.posts];
-        console.log(totalPosts);
+        // console.log(totalPosts);
 
         totalPosts.forEach(post => {
 
@@ -176,13 +179,6 @@ function getAllPosts() {
     .then(data => {
 
         postsContent.innerHTML = '';
-
-        // // Getting Array of Posts from Local Storage
-        // let newPosts = JSON.parse(localStorage.getItem('newPosts'));
-
-        // // Concatenating Local Storage Array of Posts & Arrays from Posts API
-        // totalPosts = [...newPosts, ...data.posts];
-        // console.log(totalPosts);
         
         if(localStorage.getItem('newPosts') === '') {
             totalPosts = [...data.posts];
@@ -193,20 +189,19 @@ function getAllPosts() {
             // Concatenating Local Storage Array of Posts & Arrays from Posts API
             totalPosts = [...newPosts, ...data.posts];
         }
-
+        console.log(totalPosts.length);
         totalPosts.forEach(post => {
             // Displaying All the Posts
             postTemplate(post);   
         });
 
         // Total Posts Count in Header
-        postCount.innerHTML = data.limit;
+        postCount.innerHTML = totalPosts.length;
     });
 
    
 }
-
-// getAllPosts();
+getAllPosts();
 
 // Event Listener to display All the Posts of Current User
 allPostsBtn.addEventListener('click', getAllPosts);
@@ -283,142 +278,154 @@ function postTemplate(post) {
 }
 
 
-function postTemplateGPT(post) {
-    let user;
-    // EndPoint Fetching the Single User Based on User's ID
-    const singleUserApi = `https://dummyjson.com/users/${post.userId}`;
+// function postTemplateGPT(post) {
+//     let user;
+//     // EndPoint Fetching the Single User Based on User's ID
+//     const singleUserApi = `https://dummyjson.com/users/${post.userId}`;
 
-    // Resolving the Promise that returns Response for user for the given Single Post
-    const userInfo = fetch(singleUserApi);
+//     // Resolving the Promise that returns Response for user for the given Single Post
+//     const userInfo = fetch(singleUserApi);
     
-    userInfo.then(res => {
-        if (!res.ok) {
-            throw new Error(`Failed to fetch user: ${res.status} ${res.statusText}`);
-        }
-        return res.json();
-    })
-    .then(userData => {
-        user = userData; // Assign userData to the broader scoped user variable
+//     userInfo.then(res => {
+//         if (!res.ok) {
+//             throw new Error(`Failed to fetch user: ${res.status} ${res.statusText}`);
+//         }
+//         return res.json();
+//     })
+//     .then(userData => {
+//         user = userData; // Assign userData to the broader scoped user variable
 
-            // Fetching the Comments to get just only get the comment Counts for the given post
-            const commentsAPI = `https://dummyjson.com/comments/post/${post.id}`;
-            if(post.id !== 151)
-                return fetch(commentsAPI);     
-            else
-                throw new Error("Already in the local storage!")
+//             // Fetching the Comments to get just only get the comment Counts for the given post
+//             const commentsAPI = `https://dummyjson.com/comments/post/${post.id}`;
+//             if(post.id !== 151)
+//                 return fetch(commentsAPI);     
+//             else
+//                 throw new Error("Already in the local storage!")
         
-    })
-    .then(res => {
-        if(!res.ok) {
-            throw new Error(`Failed to fetch comments: ${res.status} ${res.statusText}`);
-        }
-        return res.json();
-    }) 
-    .then(comments => {
+//     })
+//     .then(res => {
+//         if(!res.ok) {
+//             throw new Error(`Failed to fetch comments: ${res.status} ${res.statusText}`);
+//         }
+//         return res.json();
+//     }) 
+//     .then(comments => {
 
-        // Displaying Single Post in the Post's News Feed Page
-        const postHTML = `
-            <div class="posts__singlePost">
+//         // Displaying Single Post in the Post's News Feed Page
+//         const postHTML = `
+//             <div class="posts__singlePost">
 
-                <!-- Post's User Information -->
-                <div class="singlePost__userInfo">
-                    <img src="${user.image}" alt="">
-                    <div class="singlePost__userInfo--name">
-                        <h4>${user.firstName} ${user.lastName}</h4>
-                        <p>@${user.username}</p>
-                    </div>
-                </div>
+//                 <!-- Post's User Information -->
+//                 <div class="singlePost__userInfo">
+//                     <img src="${user.image}" alt="">
+//                     <div class="singlePost__userInfo--name">
+//                         <h4>${user.firstName} ${user.lastName}</h4>
+//                         <p>@${user.username}</p>
+//                     </div>
+//                 </div>
 
-                <!-- Post Content -->
-                <div class="singlePost__content">
-                    <h1>${post.title}</h1>
-                    <p>
-                        ${post.body} <a href="#">See more</a>
-                    </p>
-                </div>
+//                 <!-- Post Content -->
+//                 <div class="singlePost__content">
+//                     <h1>${post.title}</h1>
+//                     <p>
+//                         ${post.body} <a href="#">See more</a>
+//                     </p>
+//                 </div>
 
-                <!-- Post call to Actions -->
-                <div class="call_to_act">
-                    <ul class="reactions">
-                        <li><span class="reactions__thumb"><i class="fa-solid fa-thumbs-up"></i></span> ${ (post.reactions > 1 && post.reactions !== undefined) ? post.reactions + ' likes': 1 + ' like' } </li>
-                        <li class="reaction__comments" onclick="getCommentsData(${post.id})"><i class="fa-regular fa-comment"></i> ${(comments.total > 1 && comments.total !== undefined) ? comments.total + ' Comments' : '1 Comment'}  </li>
-                    </ul>
+//                 <!-- Post call to Actions -->
+//                 <div class="call_to_act">
+//                     <ul class="reactions">
+//                         <li><span class="reactions__thumb"><i class="fa-solid fa-thumbs-up"></i></span> ${ (post.reactions > 1 && post.reactions !== undefined) ? post.reactions + ' likes': 1 + ' like' } </li>
+//                         <li class="reaction__comments" onclick="getCommentsData(${post.id})"><i class="fa-regular fa-comment"></i> ${(comments.total > 1 && comments.total !== undefined) ? comments.total + ' Comments' : '1 Comment'}  </li>
+//                     </ul>
 
-                    <!-- Edit & Delete -->
-                    <ul class="call-to-act__edit-delete">
-                        <li id="editBtn"><i class="fa-regular fa-pen-to-square"></i></li>
-                        <li id="deleteBtn"><i class="fa-solid fa-trash"></i></li>
-                    </ul>
+//                     <!-- Edit & Delete -->
+//                     <ul class="call-to-act__edit-delete">
+//                         <li id="editBtn"><i class="fa-regular fa-pen-to-square"></i></li>
+//                         <li id="deleteBtn"><i class="fa-solid fa-trash"></i></li>
+//                     </ul>
 
-                </div>
+//                 </div>
                 
-            </div>
-        `;
+//             </div>
+//         `;
 
-        postsContent.innerHTML += postHTML;
-    })
-    .catch(err => {
-        console.log(err+' local');
-    });
+//         postsContent.innerHTML += postHTML;
+//     })
+//     .catch(err => {
+//         console.log(err+' local');
+//     });
 
 
-}
+// }
 
 
 // Getting & Displaying Comments in Pop-Up From the Comments API
+
 function getCommentsData(postId){
+    
+    let commentsHTML;
+    // console.log(comments, postId);
+    const localPost = JSON.parse(localStorage.getItem('newPosts')).map(post => post.id);
+    if(localPost.includes(postId)){
+        commentsHTML = `
+                <!-- Post's User Information -->
+                <h1>Nothing has been Commented!</h1>
+            `;
+            commentsContainer.innerHTML = commentsHTML;
+    }
+    else {
+        // Fetching the Comments
+        const commentsAPI = `https://dummyjson.com/comments/post/${postId}`;
 
-    // Fetching the Comments
-    const commentsAPI = `https://dummyjson.com/comments/post/${postId}`;
+        const response = fetch(commentsAPI);
 
-    const response = fetch(commentsAPI);
+        response.then(response => response.json())
+        .then(comments => {
 
-    response.then(response => response.json())
-    .then(comments => {
+            // Creating the Cross Butoon for Closing the Comments Pop Up
+            commentsHTML = `
+                <!-- Close Button -->
+                <div id="post__comments--close" onClick="closeComments()">
+                    <i class="fa-solid fa-rectangle-xmark"></i>
+                </div>
+            `;
 
-        // Creating the Cross Butoon for Closing the Comments Pop Up
-        let commentsHTML = `
-            <!-- Close Button -->
-            <div id="post__comments--close" onClick="closeComments()">
-                <i class="fa-solid fa-rectangle-xmark"></i>
-            </div>
-        `;
-
-        // Displaying Comments By Iterating the array from CommentsAPI
-        comments.comments.forEach((comment, i) => {
-            if(i === 0) {
-                commentsHTML += `
-                    <!-- Post's User Information -->
-                    <div class="post__comments--userInfo">
-                        <img src="./images/user.png" alt="">
-                        <div class="post__comments--userInfo-name">
-                            <h4>${comment.user.username}</h4>
-                            <p>
-                                ${comment.body}
-                            </p>
+            // Displaying Comments By Iterating the array from CommentsAPI
+            comments.comments.forEach((comment, i) => {
+                if(i === 0) {
+                    commentsHTML += `
+                        <!-- Post's User Information -->
+                        <div class="post__comments--userInfo">
+                            <img src="./images/user.png" alt="">
+                            <div class="post__comments--userInfo-name">
+                                <h4>${comment.user.username}</h4>
+                                <p>
+                                    ${comment.body}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                `;
-                commentsContainer.innerHTML = commentsHTML;
-            } else {
-                commentsHTML = `
-                    <!-- Post's User Information -->
-                    <div class="post__comments--userInfo">
-                        <img src="./images/user.png" alt="">
-                        <div class="post__comments--userInfo-name">
-                            <h4>${comment.user.username}</h4>
-                            <p>
-                                ${comment.body}
-                            </p>
+                    `;
+                    commentsContainer.innerHTML = commentsHTML;
+                } else {
+                    commentsHTML = `
+                        <!-- Post's User Information -->
+                        <div class="post__comments--userInfo">
+                            <img src="./images/user.png" alt="">
+                            <div class="post__comments--userInfo-name">
+                                <h4>${comment.user.username}</h4>
+                                <p>
+                                    ${comment.body}
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                `;
-                commentsContainer.innerHTML += commentsHTML;
-            }
+                    `;
+                    commentsContainer.innerHTML += commentsHTML;
+                }
 
-        })
-    });
-
+            })
+        });
+    }
     // Displaying Comments Pop-Up
     commentsPopUp.style.display = 'flex';
 
@@ -427,8 +434,10 @@ function getCommentsData(postId){
 // Closing Comments Pop-Up
 function closeComments() {
     commentsPopUp.style.display = 'none';
-}
 
+    // Clearing Comments from the container
+    commentsContainer.innerHTML = '';
+}
 
 // Delete a Post
 function deletePost(postId, e) {
@@ -588,6 +597,7 @@ function updatePost(postId) {
     EditScreenBtn.style.display = 'none';
 }
 
+// Close Edit Screen Function
 function closeEditScreen(e) {
    
     if(e.currentTarget === e.target) {
@@ -596,6 +606,7 @@ function closeEditScreen(e) {
 }
 
 EditScreenBtn.addEventListener('click', closeEditScreen);
+commentsPopUp.addEventListener('click', closeEditScreen);
 
 function search(e) {
     console.log(e.currentTarget.value);
@@ -610,41 +621,46 @@ function search(e) {
         const posts = data.posts;
 
         postsContent.innerHTML = '';
-        posts.forEach(post => {
-            // Displaying Single Post in the Post's News Feed Page
-                const postHTML = `
-                <div class="posts__singlePost">
 
-                    
+        if(posts.length === 0) {
+            postsContent.innerHTML = `<div class="posts__singlePost">
+                                        <h1 class="heading">NOT FOUND!</h2>
+                                    </div>`;
+        }
+        else {
+            posts.forEach(post => {
+                // Displaying Single Post in the Post's News Feed Page
+                    const postHTML = `
+                    <div class="posts__singlePost">
 
-                    <!-- Post Content -->
-                    <div class="singlePost__content">
-                        <h1>${post.title}</h1>
-                        <p>
-                            ${post.body} <a href="#">See more</a>
-                        </p>
-                    </div>
+                        <!-- Post Content -->
+                        <div class="singlePost__content">
+                            <h1>${post.title}</h1>
+                            <p>
+                                ${post.body} <a href="#">See more</a>
+                            </p>
+                        </div>
 
-                    <!-- Post call to Actions -->
-                    <div class="call_to_act">
-                        <ul class="reactions">
-                            <li><span class="reactions__thumb"><i class="fa-solid fa-thumbs-up"></i></span> ${ (post.reactions > 1 && post.reactions !== undefined) ? post.reactions + ' likes': 1 + ' like' } </li>
-                            <li class="reaction__comments" onclick="getCommentsData(${post.id})"><i class="fa-regular fa-comment"></i> Comments</li>
-                        </ul>
+                        <!-- Post call to Actions -->
+                        <div class="call_to_act">
+                            <ul class="reactions">
+                                <li><span class="reactions__thumb"><i class="fa-solid fa-thumbs-up"></i></span> ${ (post.reactions > 1 && post.reactions !== undefined) ? post.reactions + ' likes': 1 + ' like' } </li>
+                                <li class="reaction__comments" onclick="getCommentsData(${post.id})"><i class="fa-regular fa-comment"></i> Comments</li>
+                            </ul>
 
-                        <!-- Edit & Delete -->
-                        <ul class="call-to-act__edit-delete">
+                            <!-- Edit & Delete -->
+                            <ul class="call-to-act__edit-delete">
+                            
+                            </ul>
+
+                        </div>
                         
-                        </ul>
-
                     </div>
-                    
-                </div>
-            `;
+                `;
 
-            postsContent.innerHTML += postHTML;
-        });
-        
+                postsContent.innerHTML += postHTML;
+            });
+        }
 
     });
 
@@ -653,3 +669,13 @@ function search(e) {
 }
 
 searchBar.addEventListener('keyup', search);
+
+// Logout 
+function logout(event) {
+    // console.log(localStorage.getItem('loggedInUser'))
+    console.log('Working');
+    localStorage.removeItem('loggedInUser')
+    window.location.assign('../index.html');
+}
+
+logoutBtn.addEventListener('click', logout);

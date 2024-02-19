@@ -107,6 +107,8 @@ body {
     padding-right: 0.2rem 0.2rem 0 0;
 }
 
+
+
 /* || Content */
 .content {
     display: flex;
@@ -262,7 +264,7 @@ body {
     padding: 1rem 0.3rem 0 0.3rem;
 }
 
-.singlePost__content h1 {
+.singlePost__content h1, .heading{
     font-family: poppins;
     color: #212529ec;
     margin-bottom: 1%;
@@ -451,4 +453,52 @@ body {
     font-family: montserrat;
     font-family: montserrat;
     padding: 0.8rem 0;
+}
+
+/* || Responsive CSS */
+@media screen and (min-width: 320px) and (max-width: 965px) {
+    /* || Header */
+    .header {
+        flex-direction: column;
+    }
+    .navbar__menu {
+        flex-direction: column;
+        align-items: center;
+    }
+    #post-count {
+        margin-left: 0;
+    }
+
+    /* || Posts */
+    .addPost{
+        width: 90%;
+    }
+    .content__tabs {
+        width: 100%;
+    }
+    .content__posts {
+        width: 100%;
+    }
+
+    /* || Call to Action */
+    .call_to_act {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .call-to-act__edit-delete li {
+        padding: 1rem;
+    }
+
+    /* Edit Pop Up */
+    .editPost {
+        margin: 0;
+        padding: 1rem 0;
+    }
+    .edit__post, .post__comments {
+        width: 80%;
+    }
+    /* Comments */
+    .post__comments {
+        height: 75vh;
+    }
 }
