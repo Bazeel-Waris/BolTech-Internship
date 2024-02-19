@@ -34,7 +34,7 @@ let totalPosts = [];
 
 // Initializing Posts to Local Storage!
 if(localStorage.getItem('newPosts') === null) {
-    localStorage.setItem('newPosts', newPosts);
+    localStorage.setItem('newPosts', JSON.stringify(newPosts));
 }
 
 function addPost(event) {
@@ -42,7 +42,7 @@ function addPost(event) {
     
     // If Local Storage is not Empty, then parse it
     if(localStorage.getItem('newPosts') !== '') {
-        newPosts = JSON.parse(localStorage.getItem('newPosts'));
+        newPosts = JSON.parse(localStorage.getItem('newPosts')) || [];
     }
 
     const postTitle = form.firstElementChild.firstElementChild;
@@ -102,7 +102,10 @@ function getMyPosts() {
         postsContent.innerHTML = '';
 
         // Getting Array of Posts from Local Storage
-        let newPosts = JSON.parse(localStorage.getItem('newPosts'));
+        let newPosts = [];
+        if(localStorage.getItem('newPosts')) {
+            newPosts = JSON.parse(localStorage.getItem('newPosts'))
+        }
 
         // Concatenating Local Storage Array of Posts & Arrays from Posts API
         totalPosts = [...newPosts, ...data.posts];
@@ -441,7 +444,7 @@ function closeComments() {
 
 // Delete a Post
 function deletePost(postId, e) {
-    console.log(e.parentElement.parentElement.parentElement.remove());
+    // console.log(e.parentElement.parentElement.parentElement.remove());
     let browser = JSON.parse(localStorage.getItem('newPosts')) || [];
         
     const b = browser.map(post => {
@@ -480,8 +483,9 @@ function deletePost(postId, e) {
 
 function editPost(postId) {
 
-    const localBrowserPost = JSON.parse(localStorage.getItem('newPosts'));
-
+    // console.log(localStorage.getItem('newPosts'));
+    const localBrowserPost = JSON.parse(localStorage.getItem('newPosts')) || [];
+    
     const browserPostIDs = localBrowserPost.map(post => post.id);
 
     EditScreenBtn.style.display = 'flex';
@@ -517,8 +521,8 @@ function editPost(postId) {
         fetch(getPostAPI)
         .then(res => res.json())
         .then(post => {
-           
-             // HTML Component for Edit Screen
+        
+            // HTML Component for Edit Screen
             const editScreenHTML = `
                     <div class="editPost">
                         <h2>Edit Post</h2>
@@ -540,6 +544,7 @@ function editPost(postId) {
         });
         
     }
+    
 
 }
 
