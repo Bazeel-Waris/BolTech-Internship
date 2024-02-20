@@ -629,7 +629,7 @@ EditScreenBtn.addEventListener('click', closeEditScreen);
 commentsPopUp.addEventListener('click', closeEditScreen);
 
 function search(e) {
-    console.log(e.currentTarget.value);
+    // console.log(e.currentTarget.value);
 
     const searchAPI = `https://dummyjson.com/posts/search?q=${e.currentTarget.value}`;
 
@@ -637,7 +637,7 @@ function search(e) {
     fetch(searchAPI)
     .then(res => res.json())
     .then(data => {
-        console.log(data.posts);
+    
         const posts = data.posts;
 
         postsContent.innerHTML = '';
@@ -692,8 +692,7 @@ searchBar.addEventListener('keyup', search);
 
 // Logout 
 function logout(event) {
-    // console.log(localStorage.getItem('loggedInUser'))
-    console.log('Working');
+
     localStorage.removeItem('loggedInUser')
     window.location.assign('../index.html');
 }
