@@ -32,6 +32,9 @@ let newPosts = [];
 // Global Array for Concatenating
 let totalPosts = [];
 
+// Flag Variable to Detect the All Posts Tab & My-posts
+let flag = false;
+
 // Initializing Posts to Local Storage!
 if(localStorage.getItem('newPosts') === null) {
     localStorage.setItem('newPosts', JSON.stringify(newPosts));
@@ -67,12 +70,20 @@ function addPost(event) {
 
         data.id = Math.floor(Math.random() * (300 - 200 + 1)) + 200 ;
         // New Added Post is add to newPosts Array Variable
-        newPosts.push(data);
+        newPosts.unshift(data);
 
         // All the Posts added to newPosts Variable is stores in local Storage
         localStorage.setItem('newPosts', JSON.stringify(newPosts));
+       
+        if(flag === false) {
+            getAllPosts();
+        } else {
+            getMyPosts();
+        }
+
+        postTitle.value = '';
+        postBody.value = '';
     });
-    
 }
 
 form.addEventListener('submit', addPost);
@@ -80,6 +91,7 @@ form.addEventListener('submit', addPost);
 // Displays Posts of Current User
 function getMyPosts() {
 
+    flag = true;
     // All POSTS TAB Button
     allPostsBtn.style.backgroundColor = 'transparent';
     allPostsBtn.style.color = '#0389C9';
@@ -102,14 +114,14 @@ function getMyPosts() {
         postsContent.innerHTML = '';
 
         // Getting Array of Posts from Local Storage
-        let newPosts = [];
-        if(localStorage.getItem('newPosts')) {
-            newPosts = JSON.parse(localStorage.getItem('newPosts'))
-        }
+        let newPosts = JSON.parse(localStorage.getItem('newPosts'));
+        // let newPosts = [];
+        // if(localStorage.getItem('newPosts')) {
+        //     newPosts = JSON.parse(localStorage.getItem('newPosts'))
+        // }
 
         // Concatenating Local Storage Array of Posts & Arrays from Posts API
         totalPosts = [...newPosts, ...data.posts];
-        // console.log(totalPosts);
 
         totalPosts.forEach(post => {
 
@@ -166,7 +178,7 @@ myPostsBtn.addEventListener('click', getMyPosts);
 // It Would Display all the posts ON PAGE LOAD
 function getAllPosts() {
     // localStorage.setItem('newPosts', newPosts);
-    
+    flag = false;
     // All POSTS TAB Button
     myPostsBtn.style.backgroundColor = 'transparent';
     myPostsBtn.style.color = '#0389C9';
@@ -192,7 +204,7 @@ function getAllPosts() {
             // Concatenating Local Storage Array of Posts & Arrays from Posts API
             totalPosts = [...newPosts, ...data.posts];
         }
-        console.log(totalPosts.length);
+
         totalPosts.forEach(post => {
             // Displaying All the Posts
             postTemplate(post);   
@@ -221,8 +233,10 @@ function postTemplate(post) {
     userInfo.then(res => res.json())
     .then(user => {
 
-        
-            // Fetching the Comments to get just only get the comment Counts for the given post 
+        const localPostId = JSON.parse(localStorage.getItem('newPosts')).map(post => post.id);
+
+        if(!localPostId.includes(post.id)) {
+            // Fetching the Comments to get just only get the comment Counts for the given post
             const commentsAPI = `https://dummyjson.com/comments/post/${post.id}`;
 
             const response = fetch(commentsAPI);
@@ -272,8 +286,11 @@ function postTemplate(post) {
                 `;
 
                 postsContent.innerHTML += postHTML;
-            })
-
+            }) 
+        } 
+        // else {
+        //     console.log('Posts are Present in Local Storage!');
+        // }
         
         
     });
@@ -281,7 +298,7 @@ function postTemplate(post) {
 }
 
 
-// function postTemplateGPT(post) {
+// function postTemplate(post) {
 //     let user;
 //     // EndPoint Fetching the Single User Based on User's ID
 //     const singleUserApi = `https://dummyjson.com/users/${post.userId}`;
@@ -298,17 +315,21 @@ function postTemplate(post) {
 //     .then(userData => {
 //         user = userData; // Assign userData to the broader scoped user variable
 
+//         const localPostId = JSON.parse(localStorage.getItem('newPosts')).map(post => post.id);
+
+//         if(!localPostId.includes(post.id)) {
 //             // Fetching the Comments to get just only get the comment Counts for the given post
 //             const commentsAPI = `https://dummyjson.com/comments/post/${post.id}`;
-//             if(post.id !== 151)
-//                 return fetch(commentsAPI);     
-//             else
-//                 throw new Error("Already in the local storage!")
+            
+//                 return fetch(commentsAPI);  
+//         } else {
+//             throw 'Posts are Present in Local Storage!';
+//         }
         
 //     })
 //     .then(res => {
 //         if(!res.ok) {
-//             throw new Error(`Failed to fetch comments: ${res.status} ${res.statusText}`);
+//             throw new Error(`Failed to fetch`);
 //         }
 //         return res.json();
 //     }) 
@@ -356,7 +377,7 @@ function postTemplate(post) {
 //         postsContent.innerHTML += postHTML;
 //     })
 //     .catch(err => {
-//         console.log(err+' local');
+//         console.log(err);
 //     });
 
 
@@ -444,17 +465,17 @@ function closeComments() {
 
 // Delete a Post
 function deletePost(postId, e) {
-    // console.log(e.parentElement.parentElement.parentElement.remove());
+    
     let browser = JSON.parse(localStorage.getItem('newPosts')) || [];
-        
-    const b = browser.map(post => {
-        return post.id;
-    });
+
+    const b = browser.map(post => post.id);
 
     if(b.includes(postId)) {
-        console.log('working', b.includes(postId), browser, postId);
-        console.log(browser.splice(browser.indexOf(browser.find(post => post.id === postId)), 1));
-        localStorage.setItem('newPosts', JSON.stringify(browser))
+        browser.splice(browser.indexOf(browser.find(post => post.id === postId)), 1);
+        localStorage.setItem('newPosts', JSON.stringify(browser));
+
+        // Deleting Post from DOM Also
+        e.parentElement.parentElement.parentElement.remove();
     } else {
         
         const deleteAPI = `https://dummyjson.com/posts/${postId}`;
@@ -561,10 +582,6 @@ function updatePost(postId) {
     // Checking that the post is from localhost or from API
     if(browserPostIDs.includes(postId)) {
 
-        // const postContent = document.getElementById('post-container');
-        // const postTitle = postContent.firstElementChild.nextElementSibling.firstElementChild;
-        // const postBody = postContent.firstElementChild.nextElementSibling.lastElementChild;
-
         const editingPost = localBrowserPost.find(post => post.id === postId);
         const indexInLocalStorage = localBrowserPost.indexOf(editingPost);
         editingPost.title = editFormTitle.value;
@@ -573,10 +590,8 @@ function updatePost(postId) {
         localBrowserPost[indexInLocalStorage] = editingPost;
         localStorage.setItem('newPosts', JSON.stringify(localBrowserPost));
 
-        // postTitle.innerText = editFormTitle.value;
-        // postBody.innerText = editFormBody.value;
-        // console.log(postTitle, postBody, postContent)
-        
+        getMyPosts();
+
     } else {
 
         const updatePostAPI = `https://dummyjson.com/posts/${postId}`;

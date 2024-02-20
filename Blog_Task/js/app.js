@@ -30,30 +30,15 @@ function userSignIn (e) {
             console.log("Please Enter the Correct Credentials!");
         } 
         else {
-            // console.log(data);
-            // Storing Values in Local Storage
-            // localStorage.setItem('userId', data.id);
-            // localStorage.setItem('userName', data.username);
-            // localStorage.setItem('firstName', data.firstName);
-            // localStorage.setItem('lastName', data.lastName);
-            // localStorage.setItem('token', data.token);
             
             console.log(data);
             localStorage.setItem('loggedInUser', JSON.stringify(data));
-            // console.log(localStorage.getItem('userId'));
-            // console.log(localStorage.getItem('userName'));
-            // console.log(localStorage.getItem('firstName'));
-            // console.log(localStorage.getItem('lastName'));
-            // console.log(localStorage.getItem('token'));
             
             window.location.assign('../news-feed.html');
 
         }
 
     })
-    // Why the Catch Block is not working here?
-    // .catch(err => console.log('sf'))
-    ;
 
     
 }
