@@ -22,6 +22,9 @@ const form = document.getElementById('addPost__form');
 // variable for search field
 const searchBar = document.getElementById('search-field');
 
+// Current LoggedIn User 
+const currentUser = JSON.parse(localStorage.getItem('loggedInUser'));
+
 // Edit Section Variables
 // Getting Edit Section in the required Variable
 const EditScreenBtn = document.querySelector('.edit');
@@ -35,10 +38,16 @@ let totalPosts = [];
 // Flag Variable to Detect the All Posts Tab & My-posts
 let flag = false;
 
+// 
+// let filterDeletedPosts;
+
 // Initializing Posts to Local Storage!
 if(localStorage.getItem('newPosts') === null) {
     localStorage.setItem('newPosts', JSON.stringify(newPosts));
 }
+
+// allApiPosts
+// let allApiPosts = [];
 
 function addPost(event) {
     event.preventDefault();
@@ -115,57 +124,131 @@ function getMyPosts() {
 
         // Getting Array of Posts from Local Storage
         let newPosts = JSON.parse(localStorage.getItem('newPosts'));
-        // let newPosts = [];
-        // if(localStorage.getItem('newPosts')) {
-        //     newPosts = JSON.parse(localStorage.getItem('newPosts'))
-        // }
-
+        
         // Concatenating Local Storage Array of Posts & Arrays from Posts API
-        totalPosts = [...newPosts, ...data.posts];
+        
+        // totalPosts = [...newPosts, ...data.posts];
 
-        totalPosts.forEach(post => {
+        // totalPosts.forEach(post => {
 
-            // Displaying Single Post in the Post's News Feed Page
-            const postHTML = `
-                <div class="posts__singlePost">
+        //     // Displaying Single Post in the Post's News Feed Page
+        //     const postHTML = `
+        //         <div class="posts__singlePost">
 
-                    <!-- Post's User Information -->
-                    <div class="singlePost__userInfo">
-                        <img src="${loggedInUser.image}" alt="">
-                        <div class="singlePost__userInfo--name">
-                            <h4>${loggedInUser.firstName} ${loggedInUser.lastName}</h4>
-                            <p>@${loggedInUser.username}</p>
-                        </div>
-                    </div>
+        //             <!-- Post's User Information -->
+        //             <div class="singlePost__userInfo">
+        //                 <img src="${loggedInUser.image}" alt="">
+        //                 <div class="singlePost__userInfo--name">
+        //                     <h4>${loggedInUser.firstName} ${loggedInUser.lastName}</h4>
+        //                     <p>@${loggedInUser.username}</p>
+        //                 </div>
+        //             </div>
 
-                    <!-- Post Content -->
-                    <div class="singlePost__content">
-                        <h1>${post.title}</h1>
-                        <p>
-                            ${post.body} <a href="#">See more</a>
-                        </p>
-                    </div>
+        //             <!-- Post Content -->
+        //             <div class="singlePost__content">
+        //                 <h1>${post.title}</h1>
+        //                 <p>
+        //                     ${post.body} 
+        //                 </p>
+        //             </div>
 
-                    <!-- Post call to Actions -->
-                    <div class="call_to_act">
-                        <ul class="reactions">
-                            <li><span class="reactions__thumb"><i class="fa-solid fa-thumbs-up"></i></span> ${ post.reactions > 1 ? post.reactions + ' likes': post.reactions + ' like' } </li>
-                            <li class="reaction__comments" onclick="getCommentsData(${post.id})"><i class="fa-regular fa-comment"></i> Comments </li>
-                        </ul>
+        //             <!-- Post call to Actions -->
+        //             <div class="call_to_act">
+        //                 <ul class="reactions">
+        //                     <li><span class="reactions__thumb"><i class="fa-solid fa-thumbs-up"></i></span> ${ post.reactions > 1 ? post.reactions + ' likes': post.reactions + ' like' } </li>
+        //                     <li class="reaction__comments" onclick="getCommentsData(${post.id})"><i class="fa-regular fa-comment"></i> Comments </li>
+        //                 </ul>
 
-                        <!-- Edit & Delete -->
-                        <ul class="call-to-act__edit-delete">
-                            <li id="editBtn" onclick="editPost(${post.id});"><i class="fa-regular fa-pen-to-square"></i></li>
-                            <li id="deleteBtn" onclick="deletePost(${post.id}, this)"><i class="fa-solid fa-trash"></i></li>
-                        </ul>
+        //                 <!-- Edit & Delete -->
+        //                 <ul class="call-to-act__edit-delete">
+        //                     <li id="editBtn" onclick="editPost(${post.id});"><i class="fa-regular fa-pen-to-square"></i></li>
+        //                     <li id="deleteBtn" onclick="deletePost(${post.id}, this)"><i class="fa-solid fa-trash"></i></li>
+        //                 </ul>
 
-                    </div>
+        //             </div>
                     
-                </div>
-            `;
+        //         </div>
+        //     `;
 
-            postsContent.innerHTML += postHTML;          
+        //     postsContent.innerHTML += postHTML;          
     
+        // });
+
+        
+         // Set allApiPosts in local Storage
+         if(JSON.parse(localStorage.getItem('myApiPosts')) === null) {
+
+            const apiData = data.posts;
+            apiData.forEach(post => {
+                post.isDeleted = false;
+                console.log('check');
+            });
+            localStorage.setItem('myApiPosts', JSON.stringify(apiData));
+        }
+
+        let myApiPosts = JSON.parse(localStorage.getItem('myApiPosts'));
+
+        let deletedPosts = JSON.parse(localStorage.getItem('allApiPosts')).filter(post => post.isDeleted === true);
+
+        deletedPosts.forEach(deletedPost => {
+            myApiPosts.forEach(post => {
+                if(deletedPost.id === post.id) {
+                    post.isDeleted = true;
+                }
+            })
+        })
+    
+        localStorage.setItem('myApiPosts', JSON.stringify(myApiPosts));
+       
+        let filterDeletedMyPosts = JSON.parse(localStorage.getItem('myApiPosts')).filter(post => post.isDeleted === false);
+
+        // console.log(filterDeletedMyPosts);
+        let displayAllPosts = [...newPosts, ...filterDeletedMyPosts]
+        displayAllPosts.forEach(post => {
+            // Displaying All Available Posts
+            if(!post.isDeleted) {
+                // Displaying Single Post in the Post's News Feed Page
+                const postHTML = `
+                        <div class="posts__singlePost">
+
+                            <!-- Post's User Information -->
+                            <div class="singlePost__userInfo">
+                                <img src="${loggedInUser.image}" alt="">
+                                <div class="singlePost__userInfo--name">
+                                    <h4>${loggedInUser.firstName} ${loggedInUser.lastName}</h4>
+                                    <p>@${loggedInUser.username}</p>
+                                </div>
+                            </div>
+
+                            <!-- Post Content -->
+                            <div class="singlePost__content">
+                                <h1>${post.title}</h1>
+                                <p>
+                                    ${post.body} 
+                                </p>
+                            </div>
+
+                            <!-- Post call to Actions -->
+                            <div class="call_to_act">
+                                <ul class="reactions">
+                                    <li><span class="reactions__thumb"><i class="fa-solid fa-thumbs-up"></i></span> ${ post.reactions > 1 ? post.reactions + ' likes': post.reactions + ' like' } </li>
+                                    <li class="reaction__comments" onclick="getCommentsData(${post.id})"><i class="fa-regular fa-comment"></i> Comments </li>
+                                </ul>
+
+                                <!-- Edit & Delete -->
+                                <ul class="call-to-act__edit-delete">
+                                    <li id="editBtn" onclick="editPost(${post.id});"><i class="fa-regular fa-pen-to-square"></i></li>
+                                    <li id="deleteBtn" onclick="deletePost(${post.id}, this)"><i class="fa-solid fa-trash"></i></li>
+                                </ul>
+
+                            </div>
+                            
+                        </div>
+                    `;
+
+            postsContent.innerHTML += postHTML;   
+            }
+
         });
 
     });
@@ -179,6 +262,10 @@ myPostsBtn.addEventListener('click', getMyPosts);
 function getAllPosts() {
     // localStorage.setItem('newPosts', newPosts);
     flag = false;
+
+    // post added by user
+    let newPosts = JSON.parse(localStorage.getItem('newPosts'));
+
     // All POSTS TAB Button
     myPostsBtn.style.backgroundColor = 'transparent';
     myPostsBtn.style.color = '#0389C9';
@@ -200,22 +287,64 @@ function getAllPosts() {
         }
         else {
             // Getting Array of Posts from Local Storage
-            let newPosts = JSON.parse(localStorage.getItem('newPosts'));
+            // let newPosts = JSON.parse(localStorage.getItem('newPosts'));
+            // let editPosts = JSON.parse(localStorage.getItem('editPosts'));
+
+            // const filterPosts = 
+
             // Concatenating Local Storage Array of Posts & Arrays from Posts API
-            totalPosts = [...newPosts, ...data.posts];
+            // totalPosts = [...newPosts, ...data.posts];
+        }
+        // console.log(totalPosts)
+
+         
+        // Set allApiPosts in local Storage
+        if(JSON.parse(localStorage.getItem('allApiPosts')) === null) {
+
+            const apiData = data.posts;
+            apiData.forEach(post => {
+                post.isDeleted = false;
+                console.log('check');
+            });
+            localStorage.setItem('allApiPosts', JSON.stringify(apiData));
+            
+            
         }
 
-        totalPosts.forEach(post => {
-            // Displaying All the Posts
-            postTemplate(post);   
-        });
+        let allApiPosts = JSON.parse(localStorage.getItem('allApiPosts'));
 
+        if(localStorage.getItem('myApiPosts') !== null) {
+            let deletedPosts = JSON.parse(localStorage.getItem('myApiPosts')).filter(post => post.isDeleted === true);
+
+            deletedPosts.forEach(deletedPost => {
+                allApiPosts.forEach(post => {
+                    if(deletedPost.id === post.id) {
+                        post.isDeleted = true;
+                    }
+                })
+            })
+        
+            localStorage.setItem('allApiPosts', JSON.stringify(allApiPosts));
+        }
+
+        let filterDeletedPosts = JSON.parse(localStorage.getItem('allApiPosts')).filter(post => post.isDeleted === false);
+
+        totalPosts = [...newPosts, ...filterDeletedPosts];
+      
+        totalPosts.forEach(post => {
+            // Displaying All Available Posts
+            if(!post.isDeleted)
+                postTemplate(post);  
+
+        });
+         
         // Total Posts Count in Header
         postCount.innerHTML = totalPosts.length;
     });
 
    
 }
+getMyPosts();
 getAllPosts();
 
 // Event Listener to display All the Posts of Current User
@@ -248,7 +377,7 @@ function postTemplate(post) {
             .then(comments => {
 
                 // Displaying Single Post in the Post's News Feed Page
-                const postHTML = `
+                let postHTML = `
                     <div class="posts__singlePost">
 
                         <!-- Post's User Information -->
@@ -264,7 +393,7 @@ function postTemplate(post) {
                         <div class="singlePost__content">
                             <h1>${post.title}</h1>
                             <p>
-                                ${post.body} <a href="#">See more</a>
+                                ${post.body} 
                             </p>
                         </div>
 
@@ -274,114 +403,75 @@ function postTemplate(post) {
                                 <li><span class="reactions__thumb"><i class="fa-solid fa-thumbs-up"></i></span> ${ (post.reactions > 1 && post.reactions !== undefined) ? post.reactions + ' likes': 1 + ' like' } </li>
                                 <li class="reaction__comments" onclick="getCommentsData(${post.id})"><i class="fa-regular fa-comment"></i> ${(comments.total > 1 && comments.total !== undefined) ? comments.total + ' Comments' : '1 Comment'}  </li>
                             </ul>
+                    `
 
-                            <!-- Edit & Delete -->
-                            <ul class="call-to-act__edit-delete">
-                            
-                            </ul>
-
+                    if(post.userId === currentUser.id) {
+                        postHTML += `<!-- Edit & Delete -->
+                        <ul class="call-to-act__edit-delete">
+                            <li id="editBtn" onclick="editPost(${post.id});"><i class="fa-regular fa-pen-to-square"></i></li>
+                            <li id="deleteBtn" onclick="deletePost(${post.id}, this)"><i class="fa-solid fa-trash"></i></li>
+                        </ul>`
+                    }
+                      
+                postHTML += `    
                         </div>
-                        
                     </div>
                 `;
 
                 postsContent.innerHTML += postHTML;
             }) 
-        } 
-        // else {
-        //     console.log('Posts are Present in Local Storage!');
-        // }
+        } else {
+            console.log('working');
+                // Displaying Single Post in the Post's News Feed Page
+                let postHTML = `
+                <div class="posts__singlePost">
+
+                    <!-- Post's User Information -->
+                    <div class="singlePost__userInfo">
+                        <img src="${user.image}" alt="">
+                        <div class="singlePost__userInfo--name">
+                            <h4>${user.firstName} ${user.lastName}</h4>
+                            <p>@${user.username}</p>
+                        </div>
+                    </div>
+
+                    <!-- Post Content -->
+                    <div class="singlePost__content">
+                        <h1>${post.title}</h1>
+                        <p>
+                            ${post.body} 
+                        </p>
+                    </div>
+
+                    <!-- Post call to Actions -->
+                    <div class="call_to_act">
+                        <ul class="reactions">
+                            <li><span class="reactions__thumb"><i class="fa-solid fa-thumbs-up"></i></span> ${ (post.reactions > 1 && post.reactions !== undefined) ? post.reactions + ' likes': 1 + ' like' } </li>
+                            <li class="reaction__comments" onclick="getCommentsData(${post.id})"><i class="fa-regular fa-comment"></i> Comments  </li>
+                        </ul>
+                `
+
+                if(post.userId === currentUser.id) {
+                    postHTML += `<!-- Edit & Delete -->
+                    <ul class="call-to-act__edit-delete">
+                        <li id="editBtn" onclick="editPost(${post.id}, this)"><i class="fa-regular fa-pen-to-square"></i></li>
+                        <li id="deleteBtn" onclick="deletePost(${post.id}, this)"><i class="fa-solid fa-trash"></i></li>
+                    </ul>`
+                }
+                
+            postHTML += `    
+                    </div>
+                </div>
+            `;
+
+            postsContent.innerHTML += postHTML;
+        }
+      
         
         
     });
 
 }
-
-
-// function postTemplate(post) {
-//     let user;
-//     // EndPoint Fetching the Single User Based on User's ID
-//     const singleUserApi = `https://dummyjson.com/users/${post.userId}`;
-
-//     // Resolving the Promise that returns Response for user for the given Single Post
-//     const userInfo = fetch(singleUserApi);
-    
-//     userInfo.then(res => {
-//         if (!res.ok) {
-//             throw new Error(`Failed to fetch user: ${res.status} ${res.statusText}`);
-//         }
-//         return res.json();
-//     })
-//     .then(userData => {
-//         user = userData; // Assign userData to the broader scoped user variable
-
-//         const localPostId = JSON.parse(localStorage.getItem('newPosts')).map(post => post.id);
-
-//         if(!localPostId.includes(post.id)) {
-//             // Fetching the Comments to get just only get the comment Counts for the given post
-//             const commentsAPI = `https://dummyjson.com/comments/post/${post.id}`;
-            
-//                 return fetch(commentsAPI);  
-//         } else {
-//             throw 'Posts are Present in Local Storage!';
-//         }
-        
-//     })
-//     .then(res => {
-//         if(!res.ok) {
-//             throw new Error(`Failed to fetch`);
-//         }
-//         return res.json();
-//     }) 
-//     .then(comments => {
-
-//         // Displaying Single Post in the Post's News Feed Page
-//         const postHTML = `
-//             <div class="posts__singlePost">
-
-//                 <!-- Post's User Information -->
-//                 <div class="singlePost__userInfo">
-//                     <img src="${user.image}" alt="">
-//                     <div class="singlePost__userInfo--name">
-//                         <h4>${user.firstName} ${user.lastName}</h4>
-//                         <p>@${user.username}</p>
-//                     </div>
-//                 </div>
-
-//                 <!-- Post Content -->
-//                 <div class="singlePost__content">
-//                     <h1>${post.title}</h1>
-//                     <p>
-//                         ${post.body} <a href="#">See more</a>
-//                     </p>
-//                 </div>
-
-//                 <!-- Post call to Actions -->
-//                 <div class="call_to_act">
-//                     <ul class="reactions">
-//                         <li><span class="reactions__thumb"><i class="fa-solid fa-thumbs-up"></i></span> ${ (post.reactions > 1 && post.reactions !== undefined) ? post.reactions + ' likes': 1 + ' like' } </li>
-//                         <li class="reaction__comments" onclick="getCommentsData(${post.id})"><i class="fa-regular fa-comment"></i> ${(comments.total > 1 && comments.total !== undefined) ? comments.total + ' Comments' : '1 Comment'}  </li>
-//                     </ul>
-
-//                     <!-- Edit & Delete -->
-//                     <ul class="call-to-act__edit-delete">
-//                         <li id="editBtn"><i class="fa-regular fa-pen-to-square"></i></li>
-//                         <li id="deleteBtn"><i class="fa-solid fa-trash"></i></li>
-//                     </ul>
-
-//                 </div>
-                
-//             </div>
-//         `;
-
-//         postsContent.innerHTML += postHTML;
-//     })
-//     .catch(err => {
-//         console.log(err);
-//     });
-
-
-// }
 
 
 // Getting & Displaying Comments in Pop-Up From the Comments API
@@ -465,7 +555,7 @@ function closeComments() {
 
 // Delete a Post
 function deletePost(postId, e) {
-    
+    console.log(e);
     let browser = JSON.parse(localStorage.getItem('newPosts')) || [];
 
     const b = browser.map(post => post.id);
@@ -473,9 +563,9 @@ function deletePost(postId, e) {
     if(b.includes(postId)) {
         browser.splice(browser.indexOf(browser.find(post => post.id === postId)), 1);
         localStorage.setItem('newPosts', JSON.stringify(browser));
-
+        alert(`User's Post has been Deleted successfully!`);
         // Deleting Post from DOM Also
-        e.parentElement.parentElement.parentElement.remove();
+        // e.parentElement.parentElement.parentElement.remove();
     } else {
         
         const deleteAPI = `https://dummyjson.com/posts/${postId}`;
@@ -490,7 +580,27 @@ function deletePost(postId, e) {
             return res.json();
         })
         .then(data => {
-            console.log(`Post Deleted At: ${data.deletedOn} from the Given Api`);
+            // console.log(`Post Deleted At: ${data.deletedOn} from the Given Api`);
+            console.log(flag);
+            if(flag) {
+                let filterDeletedMyPosts = JSON.parse(localStorage.getItem('myApiPosts')) || [];
+
+                // index of post to be delete
+                let index = filterDeletedMyPosts.indexOf(filterDeletedMyPosts.find(post => post.id === data.id ))
+                filterDeletedMyPosts[index].isDeleted = true;
+                console.log(filterDeletedMyPosts[index]);
+                localStorage.setItem('myApiPosts',JSON.stringify(filterDeletedMyPosts));
+            } else {
+                let filterDeletedPosts = JSON.parse(localStorage.getItem('allApiPosts')) || [];
+
+                // index of post to be delete
+                let index = filterDeletedPosts.indexOf(filterDeletedPosts.find(post => post.id === data.id ))
+                filterDeletedPosts[index].isDeleted = true;
+                console.log(filterDeletedPosts[index]);
+                localStorage.setItem('allApiPosts',JSON.stringify(filterDeletedPosts));
+            }
+            alert(`${data.title} has been Deleted Successfully!`);
+        
         })
         .catch(err => {
             console.log(err)
@@ -498,15 +608,20 @@ function deletePost(postId, e) {
         });
 
     }
+    // Deleting Post from DOM Also
+    e.parentElement.parentElement.parentElement.remove();
     
     
 }
 
-function editPost(postId) {
+function editPost(postId, e) {
+// console.log(e);
+// console.log(postId);
 
-    // console.log(localStorage.getItem('newPosts'));
     const localBrowserPost = JSON.parse(localStorage.getItem('newPosts')) || [];
     
+    // const allApiPosts = JSON.parse(localStorage.getItem('allApiPosts')) || [];
+
     const browserPostIDs = localBrowserPost.map(post => post.id);
 
     EditScreenBtn.style.display = 'flex';
@@ -533,9 +648,15 @@ function editPost(postId) {
                         </form>
                     </div>
                 `;
+
         EditScreenBtn.firstElementChild.innerHTML = editScreenHTML;
 
     } else {
+
+        // // Finding the post to be Edited from LocalStorage
+        const myApiPosts = [...JSON.parse(localStorage.getItem('myApiPosts'))]
+        const currentActivePost = myApiPosts.find(post => post.id === postId);
+        console.log(currentActivePost);
 
         const getPostAPI = `https://dummyjson.com/posts/${postId}`;
 
@@ -549,13 +670,13 @@ function editPost(postId) {
                         <h2>Edit Post</h2>
                         <form id="editPost__form" method="PUT">
                             <div class="editPost__form--title">
-                                <input type="text" value="${post.title}"/>
+                                <input type="text" value="${currentActivePost.title}"/>
                             </div>
                             <div class="editPost__form--description">
-                                <textarea rows="5">${post.body}</textarea>
+                                <textarea rows="5">${currentActivePost.body}</textarea>
                             </div>
                             <div class="editPost__form--btn">
-                                <input type="button" onclick="updatePost(${post.id});" value="UPDATE POST" />
+                                <input type="button" onclick="updatePost(${currentActivePost.id});" value="UPDATE POST" />
                             </div>
                         </form>
                     </div>
@@ -590,7 +711,11 @@ function updatePost(postId) {
         localBrowserPost[indexInLocalStorage] = editingPost;
         localStorage.setItem('newPosts', JSON.stringify(localBrowserPost));
 
-        getMyPosts();
+        if(flag) {
+            getMyPosts();
+        } else {
+            getAllPosts();
+        }
 
     } else {
 
@@ -609,8 +734,47 @@ function updatePost(postId) {
         .then(res => res.json())
         .then(updatedPost => {
             console.log('Updated Successfully!');
-            console.log(updatedPost);
+            // console.log(updatedPost);
+            const updatedObject = updatedPost;
+            updatedObject.isDeleted = false;
+        
+            // Accessing allApiPosts local Storage
+            const allApiPosts = JSON.parse(localStorage.getItem('allApiPosts'));
+
+            // finding & accessing specific post from allApiPosts local Storage
+            const editingPost = allApiPosts.find(post => post.id === postId);
+            
+            // finding index of updating in allApiPosts local Storage
+            const index = allApiPosts.indexOf(editingPost);
+
+            allApiPosts[index] = updatedObject;
+
+            // Updating the allApiPosts local Storage
+            localStorage.setItem('allApiPosts', JSON.stringify(allApiPosts));
+            
+            if(localStorage.getItem('myApiPosts') !== null) {
+                // Accessing myApiPosts local Storage
+                const myApiPosts = JSON.parse(localStorage.getItem('myApiPosts'));
+
+                // finding & accessing specific post from myApiPosts local Storage
+                const editingPostInMyApi = myApiPosts.find(post => post.id === updatedObject.id);
+                
+                // finding index of updating in myApiPosts local Storage
+                const indexOfEditingPostInMyApi = myApiPosts.indexOf(editingPostInMyApi);
+    
+                myApiPosts[indexOfEditingPostInMyApi] = updatedObject;
+    
+                // Updating the allApiPosts local Storage
+                localStorage.setItem('myApiPosts', JSON.stringify(myApiPosts));
+            }
+             
+            if(flag) {
+                getMyPosts();
+            } else {
+                getAllPosts();
+            }
         });
+        
     }
     
 
@@ -693,8 +857,12 @@ searchBar.addEventListener('keyup', search);
 // Logout 
 function logout(event) {
 
-    localStorage.removeItem('loggedInUser')
+    localStorage.removeItem('loggedInUser');
+    localStorage.removeItem('allApiPosts');
+    localStorage.removeItem('myApiPosts');
+    localStorage.removeItem('newPosts');
     window.location.assign('../index.html');
 }
 
 logoutBtn.addEventListener('click', logout);
+
