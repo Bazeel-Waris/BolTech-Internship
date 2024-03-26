@@ -1,0 +1,66 @@
+<div class="overlay">
+
+     <div class="popup">
+          <h2>{{ isEditMode ? 'Update the Task': 'Create a new Task' }}</h2>
+
+          <a class="close" href="#" (click)="OnCloseForm()">&times;</a>
+
+          <div class="content">
+               <section class="container">
+
+                    <form [formGroup]="reactiveForm" class="form" (ngSubmit)="onFromSubmitted()">
+                         <div class="input-box">
+                              <label>Title*</label>
+                              <input type="text" formControlName="title"/>
+                              <small *ngIf="reactiveForm.get('title').invalid && !reactiveForm.get('title').untouched">*Title is Required!</small>
+                         </div>
+                         <div class="input-box">
+                              <label>Description*</label>
+                              <textarea rows="8" formControlName="description"></textarea>
+                              <small *ngIf="reactiveForm.get('description').invalid && !reactiveForm.get('description').untouched">*Description is Required!</small>
+                         </div>
+                         <div class="column">
+                              <div class="input-box">
+                                   <label>Assigned To</label>
+                                   <input type="text" formControlName="assignTo" />
+                                   <small *ngIf="reactiveForm.get('assignTo').invalid && !reactiveForm.get('assignTo').untouched">*Person Name is Required!</small>
+                              </div>
+                              <div class="input-box">
+                                   <label>Created At</label>
+                                   <input type="date" formControlName="createdAt" />
+                                   <small *ngIf="reactiveForm.get('createdAt').invalid && !reactiveForm.get('createdAt').untouched">*Task Date is Required!</small>
+                              </div>
+                         </div>
+                         <div class="input-box address">
+                              <div class="column">
+                                   <div class="select-box">
+                                        <select formControlName="priority">
+                                             <option hidden>Priority</option>
+                                             <option value="low">Low</option>
+                                             <option value="medium">Medium</option>
+                                             <option value="high">High</option>
+                                             <option value="critical">Critical</option>
+                                        </select>
+                                        <small *ngIf="reactiveForm.get('priority').invalid && !reactiveForm.get('priority').untouched">*Please Select Status!</small>
+                                   </div>
+                                   <div class="select-box">
+                                        <select formControlName="status">
+                                             <option hidden>Status</option>
+                                             <option value="open">Open</option>
+                                             <option value="started">Started</option>
+                                             <option value="in-progress">In Progress</option>
+                                             <option value="complete">Complete</option>
+                                        </select>
+                                        <small *ngIf="reactiveForm.get('status').invalid && !reactiveForm.get('status').untouched">*Please Select Status!</small>
+                                   </div>
+                              </div>
+                         </div>
+                         <button type="submit">{{isEditMode ? 'Update': 'Create'}} Task</button>
+                    </form>
+
+               </section>
+          </div>
+
+     </div>
+
+</div>

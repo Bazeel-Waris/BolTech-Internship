@@ -1,0 +1,40 @@
+<!-- <h2>Learn NG Template</h2> -->
+
+<!-- The content in the <ng-template></ng-template> wouldn't be displayed by default -->
+<!-- <ng-template #myTemplate>
+  <h3>This is a template</h3>
+  <p>This is an example paragraph to understand ng-template</p>
+</ng-template> -->
+
+<!-- One way to display this <ngtemplate><ng-template> template is -->
+<!-- ngTemplateOutlet Directive -->
+<!-- It is a structural directive, that's because it is going to manipulate the web page -->
+<!-- <div *ngTemplateOutlet="myTemplate"></div> -->
+
+<!-- OR Use following to display above content -->
+<!-- <ng-container *ngTemplateOutlet="myTemplate"></ng-container> -->
+
+<!-- ng-container -->
+<!-- ng-container is used along side the ngIf directive -->
+<!-- Here! Another way to display the content of <ng-template></ng-templat> & 
+     the way is to use its reference variable in *ngIf directive -->
+<!-- <ng-container *ngIf="toggle; else toggleOff">
+  <p>This is the following given Paragraph!</p>
+</ng-container> -->
+
+<!-- <ng-template></ng-template> defines a template that is not rendered by default. -->
+<!-- <ng-template #toggleOff>
+  <p>The toggle is off.</p>
+</ng-template> -->
+
+<!-- <button (click)="onToggle()">Toggle</button> -->
+
+<div class="container">
+  <input type="text" #inputElement />
+  <button (click) = "onBtnClicked(inputElement)">Submit</button>
+  <app-demo [message] = "inputVal" *ngIf="!toDestroy">
+     <p #tempPara>This is the Projection Text: {{ inputVal }}</p>
+  </app-demo>
+
+  <button (click)="onDestroyClicked()">Show / Hide</button>
+</div>
