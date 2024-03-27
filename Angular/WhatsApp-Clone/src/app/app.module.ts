@@ -8,6 +8,9 @@ import { TopMenuComponent } from './inbox/top-menu/top-menu.component';
 import { SearchComponent } from './inbox/search/search.component';
 import { ChatListComponent } from './inbox/chat-list/chat-list.component';
 import { ChatCardComponent } from './inbox/chat-list/chat-card/chat-card.component';
+import { HeaderComponent } from './chat-screen/header/header.component';
+import { ChatBoardComponent } from './chat-screen/chat-board/chat-board.component';
+import { TextFieldComponent } from './chat-screen/text-field/text-field.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,10 @@ import { ChatCardComponent } from './inbox/chat-list/chat-card/chat-card.compone
     TopMenuComponent,
     SearchComponent,
     ChatListComponent,
-    ChatCardComponent
+    ChatCardComponent,
+    HeaderComponent,
+    ChatBoardComponent,
+    TextFieldComponent
   ],
   imports: [
     BrowserModule
