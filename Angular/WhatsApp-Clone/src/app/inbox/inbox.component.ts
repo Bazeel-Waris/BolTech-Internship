@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { User } from '../Models/User';
 
 @Component({
   selector: 'app-inbox',
@@ -6,5 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./inbox.component.scss']
 })
 export class InboxComponent {
+     
+     @Output()
+     openChatToApp: EventEmitter<User> = new EventEmitter<User>();
 
+     getClickedChat(event: User) {
+          this.openChatToApp.emit(event);
+          // console.log(event);
+     }
 }

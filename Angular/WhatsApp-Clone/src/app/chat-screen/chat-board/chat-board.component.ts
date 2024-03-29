@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { User } from 'src/app/Models/User';
 
 @Component({
   selector: 'app-chat-board',
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./chat-board.component.scss']
 })
 export class ChatBoardComponent {
-
+     @Input()
+     openChat: User;
 }

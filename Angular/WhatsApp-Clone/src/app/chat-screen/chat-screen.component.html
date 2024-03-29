@@ -1,7 +1,7 @@
 <div class="container xl min-h-[100vh] border-green-500 border-0">
-     <app-header></app-header>
-     <div class="flex justify-between flex-col">
-          <app-chat-board class=""></app-chat-board>
-          <app-text-field class=""></app-text-field>
+     <app-header [openChat]="userChat"></app-header>
+     <div class="flex justify-between min-h-[91vh] flex-col">
+          <app-chat-board [openChat]="userChat"></app-chat-board>
+          <app-text-field></app-text-field>
      </div>
 </div>

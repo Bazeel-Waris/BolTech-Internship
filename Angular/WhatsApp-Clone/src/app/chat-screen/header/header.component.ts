@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { User } from 'src/app/Models/User';
 
 @Component({
   selector: 'app-header',
@@ -7,4 +8,12 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+     @Input()
+     openChat: User;
+
+     ngOnChanges() {
+          console.log(this.openChat);
+          
+     }
+     
 }

@@ -1,14 +1,17 @@
-<div class="userCard flex px-5 pl-6 justify-between items-center">
-     <img src="../../../../assets/user.png" alt="">
+<div 
+     class="userCard flex px-5 pl-6 justify-between items-center cursor-pointer hover:bg-slate-200"
 
-     <div class="userCard__info flex w-5/6 font-sans justify-between border-b-2 py-4 pl-2">
-          <div class="info__personal--info">
-               <h2 class="font-bold text-gray-500 text-lg">Daniel Kalio</h2>
-               <p class="text-gray-500">Oboy dash me 2k na Oboy dash me na...</p>
-          </div>
-
-          <div class="info__time">
-               <p class="text-gray-600 font-semibold pl-2">2:24 pm</p>
+>
+          <img class="h-12 w-12 rounded-full" [src]="person.image" alt="">
+     
+          <div class="userCard__info w-5/6 font-sans justify-between border-b-2 py-4 pl-2">
+               <div class="info__personal--info flex justify-between">
+                    <h2 class="font-bold text-gray-500 text-lg">{{ person.name }}</h2>
+                    <p class="text-gray-600 font-semibold pl-2">{{ person.lastMessage.messageTime }}</p>
+               </div>
+     
+               <div class="info__time">
+                    <p class="text-gray-500">{{ (person.lastMessage.messageText.length < 40) ? person.lastMessage.messageText.slice(0, 40) : person.lastMessage.messageText.slice(0, 40) + '...' }}</p>
+               </div>
           </div>
      </div>
-</div>
