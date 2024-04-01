@@ -1,4 +1,4 @@
-<div class="send relative bg-white px-3 py-2 rounded-lg max-w-[35vw] my-2">
-     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus ad aliquam commodi! Repudiandae dolor quis fuga rem, hic, debitis officiis quibusdam ab in maiores quasi repellat optio adipisci voluptates aspernatur? </p>
-     <small class="absolute right-2 bottom-1">8:40pm</small>
+<div class="relative bg-white px-3 py-2 rounded-lg max-w-[35vw] my-2" [ngClass]="message.writtenByMe? 'send' : ''">
+     <p class="mb-4">{{message.messageText}} </p>
+     <small class="absolute right-2 bottom-1">{{message.messageTime}}</small>
 </div>

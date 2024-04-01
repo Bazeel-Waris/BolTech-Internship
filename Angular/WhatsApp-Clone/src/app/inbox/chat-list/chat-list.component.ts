@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChildren, QueryList, inject, Output, EventEmitter } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChildren, QueryList, inject, Output, EventEmitter, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { User } from 'src/app/Models/User';
 import { UserService } from 'src/app/Services/UserService.service';
 
@@ -7,15 +7,23 @@ import { UserService } from 'src/app/Services/UserService.service';
   templateUrl: './chat-list.component.html',
   styleUrls: ['./chat-list.component.scss']
 })
-export class ChatListComponent {
+export class ChatListComponent implements OnChanges{
+
      userService: UserService = inject(UserService);
+     filteredUsers: User[];
+     @Input()
+     searchContactName: string = '';
+
+     ngOnChanges(changes: SimpleChanges): void {
+          this.filteredUsers = this.userService.users.filter(p => p.name.toLowerCase().includes(this.searchContactName.toLowerCase()));
+          console.log(this.filteredUsers);
+     }
 
      @Output()
      openChatClicked: EventEmitter<User> = new EventEmitter<User>();
 
      onClickChatCard(person: User) {
           this.openChatClicked.emit(person);
-          // console.log(person);
      }
      // @ViewChildren('chatCard') chatCard: QueryList<ElementRef>;
 

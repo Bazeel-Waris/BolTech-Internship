@@ -12,8 +12,7 @@ export class HeaderComponent {
      openChat: User;
 
      ngOnChanges() {
-          console.log(this.openChat);
-          
+          // console.log(this.openChat);
      }
      
 }

@@ -8,11 +8,17 @@ import { User } from '../Models/User';
 })
 export class InboxComponent {
      
+     searchedContactName: string = '';
+
      @Output()
      openChatToApp: EventEmitter<User> = new EventEmitter<User>();
 
      getClickedChat(event: User) {
-          this.openChatToApp.emit(event);
-          // console.log(event);
+          this.openChatToApp.emit(event);          
+     }
+
+     getSearchedName(event) {
+          this.searchedContactName = event;
+          // console.log(this.searchedContactName);
      }
 }

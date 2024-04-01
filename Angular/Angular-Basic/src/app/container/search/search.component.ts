@@ -15,9 +15,9 @@ export class SearchComponent {
   searchTextChanged: EventEmitter<string> = new EventEmitter<string>();
 
   // 2. Create Method that would raised the above event
-  // onSearchTextChanged() {
-  //   this.searchTextChanged.emit(this.searchText);
-  // }
+  onSearchTextChanged() {
+    this.searchTextChanged.emit(this.searchText);
+  }
 
   // updateInputValue(event: any) {
   //   this.searchText = event.target.value;

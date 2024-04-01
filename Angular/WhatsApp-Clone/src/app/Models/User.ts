@@ -5,14 +5,15 @@ export class User {
      name: string;
      image: string;
      lastMessage: LastMessage;
-     // messages: Message = {
-     //      sentMessages: [],
-     //      receivedMessages: []
-     // };
+     allMessages: Message[] = [];
 }
 
 class Message {
-
+     id: number;
+     messageText: string;
+     messageTime: string;
+     date: string;
+     writtenByMe: boolean;
 }
 
 class LastMessage {

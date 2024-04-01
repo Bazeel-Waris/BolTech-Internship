@@ -1,19 +1,9 @@
-<div class="border-yellow-500 overflow-y-auto h-[78vh] min-h-[70vh] px-6">
-    <!-- Demo Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, dolores dignissimos velit repellat blanditiis neque id autem aliquid quia nobis animi, sit accusantium sunt beatae quasi libero totam quaerat provident. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore quia voluptatibus iste iure consequatur voluptas sunt quaerat doloremque ut saepe quis accusamus rerum, repudiandae minima maxime laborum pariatur! Necessitatibus, mollitia. Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, sit saepe architecto neque, cumque sapiente iste dolor a voluptas impedit perspiciatis corporis possimus amet labore. Praesentium nulla quasi vero quidem?
-    Demo Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, dolores dignissimos velit repellat blanditiis neque id autem aliquid quia nobis animi, sit accusantium sunt beatae quasi libero totam quaerat provident. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore quia voluptatibus iste iure consequatur voluptas sunt quaerat doloremque ut saepe quis accusamus rerum, repudiandae minima maxime laborum pariatur! Necessitatibus, mollitia. Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, sit saepe architecto neque, cumque sapiente iste dolor a voluptas impedit perspiciatis corporis possimus amet labore. Praesentium nulla quasi vero quidem?
-    Demo Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, dolores dignissimos velit repellat blanditiis neque id autem aliquid quia nobis animi, sit accusantium sunt beatae quasi libero totam quaerat provident. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore quia voluptatibus iste iure consequatur voluptas sunt quaerat doloremque ut saepe quis accusamus rerum, repudiandae minima maxime laborum pariatur! Necessitatibus, mollitia. Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, sit saepe architecto neque, cumque sapiente iste dolor a voluptas impedit perspiciatis corporis possimus amet labore. Praesentium nulla quasi vero quidem?
-    Demo Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, dolores dignissimos velit repellat blanditiis neque id autem aliquid quia nobis animi, sit accusantium sunt beatae quasi libero totam quaerat provident. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore quia voluptatibus iste iure consequatur voluptas sunt quaerat doloremque ut saepe quis accusamus rerum, repudiandae minima maxime laborum pariatur! Necessitatibus, mollitia. Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, sit saepe architecto neque, cumque sapiente iste dolor a voluptas impedit perspiciatis corporis possimus amet labore. Praesentium nulla quasi vero quidem?
-    Demo Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, dolores dignissimos velit repellat blanditiis neque id autem aliquid quia nobis animi, sit accusantium sunt beatae quasi libero totam quaerat provident. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore quia voluptatibus iste iure consequatur voluptas sunt quaerat doloremque ut saepe quis accusamus rerum, repudiandae minima maxime laborum pariatur! Necessitatibus, mollitia. Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, sit saepe architecto neque, cumque sapiente iste dolor a voluptas impedit perspiciatis corporis possimus amet labore. Praesentium nulla quasi vero quidem?
-    Demo Lorem ipsum dolor sit, amet consectetur adipisicing elit. Obcaecati, dolores dignissimos velit repellat blanditiis neque id autem aliquid quia nobis animi, sit accusantium sunt beatae quasi libero totam quaerat provident. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Labore quia voluptatibus iste iure consequatur voluptas sunt quaerat doloremque ut saepe quis accusamus rerum, repudiandae minima maxime laborum pariatur! Necessitatibus, mollitia. Lorem ipsum dolor sit amet consectetur adipisicing elit. Error, sit saepe architecto neque, cumque sapiente iste dolor a voluptas impedit perspiciatis corporis possimus amet labore. Praesentium nulla quasi vero quidem? -->
-    <app-message-card class="flex justify-end"></app-message-card>
-    <app-message-card></app-message-card>
-    <app-message-card></app-message-card>
-    <app-message-card></app-message-card>
-    <app-message-card></app-message-card>
-    <app-message-card></app-message-card>
-    <app-message-card></app-message-card>
-    <app-message-card></app-message-card>
-    <app-message-card></app-message-card>
-    <app-message-card></app-message-card>
+<div class="overflow-y-auto h-[78vh] min-h-[70vh] px-6">
+   
+    <app-message-card 
+          [ngClass]="msg.writtenByMe ? 'flex justify-end': ''" 
+          *ngFor="let msg of openChat?.allMessages" 
+          [message]="msg">
+     </app-message-card>
     
 </div>

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { User } from 'src/app/Models/User';
 
 @Component({
@@ -6,7 +6,13 @@ import { User } from 'src/app/Models/User';
   templateUrl: './chat-board.component.html',
   styleUrls: ['./chat-board.component.scss']
 })
-export class ChatBoardComponent {
+export class ChatBoardComponent implements OnChanges{
      @Input()
      openChat: User;
+
+     allMessages;
+     ngOnChanges() {
+          console.log(this.openChat);
+          this.allMessages = this.openChat?.allMessages;
+     }
 }

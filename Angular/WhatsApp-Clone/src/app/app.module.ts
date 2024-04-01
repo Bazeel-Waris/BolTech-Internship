@@ -12,6 +12,8 @@ import { HeaderComponent } from './chat-screen/header/header.component';
 import { ChatBoardComponent } from './chat-screen/chat-board/chat-board.component';
 import { TextFieldComponent } from './chat-screen/text-field/text-field.component';
 import { MessageCardComponent } from './chat-screen/chat-board/message-card/message-card.component';
+import { SettingComponent } from './inbox/setting/setting.component';
+import { SettingTopComponent } from './inbox/setting/setting-top/setting-top.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { MessageCardComponent } from './chat-screen/chat-board/message-card/mess
     HeaderComponent,
     ChatBoardComponent,
     TextFieldComponent,
-    MessageCardComponent
+    MessageCardComponent,
+    SettingComponent,
+    SettingTopComponent
   ],
   imports: [
     BrowserModule
