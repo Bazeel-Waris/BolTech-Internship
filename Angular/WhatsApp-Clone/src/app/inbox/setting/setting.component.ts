@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-setting',
@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./setting.component.scss']
 })
 export class SettingComponent {
+
+     @Output() onClickCloseBtn: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+     clickCloseBtn(value: boolean) {
+          this.onClickCloseBtn.emit(value)
+     }
 
 }

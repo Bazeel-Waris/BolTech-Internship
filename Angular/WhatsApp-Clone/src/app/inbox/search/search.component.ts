@@ -20,10 +20,18 @@ export class SearchComponent {
      }
 
      changeIcon(){
-          if(this.searchIcon === '../../assets/attachment.svg') {
+          if(this.searchIcon === '../../assets/attachment.svg' && this.searchedContact.nativeElement.value === '') {
                this.searchIcon = '../../assets/search.svg'
           } else {
                this.searchIcon = '../../assets/attachment.svg'
+          }
+     }
+
+     back() {
+          if(this.searchedContact.nativeElement.value !== '') {
+               this.searchIcon = '../../assets/search.svg'
+               this.searchedContact.nativeElement.value = '';
+               this.onSearchingContact.emit(this.searchedContact.nativeElement.value);
           }
      }
 }

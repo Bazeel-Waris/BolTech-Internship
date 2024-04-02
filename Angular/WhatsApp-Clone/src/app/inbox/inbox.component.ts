@@ -9,6 +9,7 @@ import { User } from '../Models/User';
 export class InboxComponent {
      
      searchedContactName: string = '';
+     setting: boolean = false;
 
      @Output()
      openChatToApp: EventEmitter<User> = new EventEmitter<User>();
@@ -19,6 +20,15 @@ export class InboxComponent {
 
      getSearchedName(event) {
           this.searchedContactName = event;
-          // console.log(this.searchedContactName);
+     }
+
+     // TO Open Settings
+     openSetting(value: boolean) {
+          this.setting = value;
+     }
+
+     // To Close Setting
+     closeSetting(value: boolean) {
+          this.setting = value;
      }
 }

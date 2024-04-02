@@ -1,8 +1,18 @@
 <div class="inbox__container h-screen container border-0 border-black ">
-     <!-- <app-top-menu></app-top-menu>
-     <app-search (onSearchingContact)="getSearchedName($event)"></app-search>
-     <app-chat-list (openChatClicked)="getClickedChat($event)" [searchContactName]="searchedContactName"></app-chat-list> -->
+     <app-top-menu 
+          (onClickSettingIcon)="openSetting($event)"
+          *ngIf="!setting">
+     </app-top-menu>
+     <app-search 
+          (onSearchingContact)="getSearchedName($event)"
+          *ngIf="!setting">
+     </app-search>
+     <app-chat-list 
+          (openChatClicked)="getClickedChat($event)" 
+          [searchContactName]="searchedContactName"
+          *ngIf="!setting">
+     </app-chat-list>
 
-     <app-setting></app-setting>
+     <app-setting *ngIf="setting" (onClickCloseBtn)="closeSetting($event)"></app-setting>
 </div>
 

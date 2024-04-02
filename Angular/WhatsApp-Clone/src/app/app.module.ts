@@ -14,6 +14,9 @@ import { TextFieldComponent } from './chat-screen/text-field/text-field.componen
 import { MessageCardComponent } from './chat-screen/chat-board/message-card/message-card.component';
 import { SettingComponent } from './inbox/setting/setting.component';
 import { SettingTopComponent } from './inbox/setting/setting-top/setting-top.component';
+import { SettingBodyComponent } from './inbox/setting/setting-body/setting-body.component';
+import { ThemeModeComponent } from './inbox/setting/setting-body/theme-mode/theme-mode.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -29,10 +32,13 @@ import { SettingTopComponent } from './inbox/setting/setting-top/setting-top.com
     TextFieldComponent,
     MessageCardComponent,
     SettingComponent,
-    SettingTopComponent
+    SettingTopComponent,
+    SettingBodyComponent,
+    ThemeModeComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
