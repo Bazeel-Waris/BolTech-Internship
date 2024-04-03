@@ -1,4 +1,4 @@
-import { AfterContentInit, Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { User } from './Models/User';
 
 @Component({
@@ -6,19 +6,21 @@ import { User } from './Models/User';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterContentInit{
+export class AppComponent {
   title = 'WhatsApp-Clone';
 
   passUserToScreen: User;
 
+  selectedThemeMode: string = '';
+
   getChatFromInbox(event: User) {
-     // console.log(event);
      this.passUserToScreen = event;
-     // console.log(this.passUserToScreen);
+     console.log(event);
+     
   }
 
-  ngAfterContentInit(): void {
-    
+  changeMode(modeValue: string) {
+     this.selectedThemeMode = modeValue;
   }
 
 }

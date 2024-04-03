@@ -3,7 +3,8 @@
     <app-message-card 
           [ngClass]="msg.writtenByMe ? 'flex justify-end': ''" 
           *ngFor="let msg of openChat?.allMessages" 
-          [message]="msg">
+          [message]="msg"
+          [selectedThemeMode]="selectedThemeMode">
      </app-message-card>
     
 </div>

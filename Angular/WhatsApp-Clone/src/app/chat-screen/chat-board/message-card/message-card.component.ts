@@ -8,11 +8,15 @@ import { User } from 'src/app/Models/User';
   styleUrls: ['./message-card.component.scss']
 })
 export class MessageCardComponent implements OnChanges{
+
+     @Input() selectedThemeMode: string = '';
+     getLocalStorage: string = localStorage.getItem('themeMode');
+
      @Input()
      message;
 
      ngOnChanges(changes: SimpleChanges): void {
-          console.log(this.message);
+          console.log(this.message.writtenByMe);
           
      }
 }

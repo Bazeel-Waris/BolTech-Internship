@@ -7,12 +7,15 @@ import { User } from 'src/app/Models/User';
   styleUrls: ['./chat-board.component.scss']
 })
 export class ChatBoardComponent implements OnChanges{
+     
      @Input()
      openChat: User;
 
+     @Input() selectedThemeMode: string = '';
+     getLocalStorage: string = localStorage.getItem('themeMode');
+
      allMessages;
      ngOnChanges() {
-          console.log(this.openChat);
           this.allMessages = this.openChat?.allMessages;
      }
 }

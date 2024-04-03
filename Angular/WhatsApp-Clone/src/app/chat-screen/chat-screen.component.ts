@@ -6,13 +6,14 @@ import { User } from '../Models/User';
   templateUrl: './chat-screen.component.html',
   styleUrls: ['./chat-screen.component.scss']
 })
-export class ChatScreenComponent implements OnChanges{
+export class ChatScreenComponent {
 
-     @Input()
-    userChat: User;
-     ngOnChanges(changes: SimpleChanges): void {
-          // console.log(changes);
-          // console.log(this.userChat);
-          
+     @Input() userChat: User;
+     
+     @Input() selectedThemeMode: string = '';
+     getLocalStorage: string = localStorage.getItem('themeMode');
+
+     ngOnInit() {
+          console.log(this.userChat);          
      }
 }

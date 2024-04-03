@@ -1,4 +1,6 @@
-<div class="text-field flex bg-gray-200 items-center p-5 px-6 top">
+<div class="text-field flex items-center p-5 px-6 top"
+     [ngClass]="(selectedThemeMode === 'dark' || getLocalStorage === 'dark') ? 'bg-slate-800' : 'bg-gray-200'"
+>
      <div class="emoji mx-4">
           <img src="../../../assets/emoji.svg" alt="">
      </div>
@@ -13,6 +15,7 @@
                type="text" 
                placeholder="Type a message"
                class="py-3 rounded-xl px-5 pl-14 outline-0 w-full" 
+               [ngClass]="(selectedThemeMode === 'dark' || getLocalStorage === 'dark') ? 'bg-slate-700' : ''"
           />
      </div>
 

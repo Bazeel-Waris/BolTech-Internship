@@ -1,5 +1,7 @@
-<div class="setting-container bg-emerald-600 pt-14">
-     <div class="setting__icon--back flex p-3 px-8 text-white">
+<div class="setting-container pt-14"
+[ngClass]="(selectedThemeMode === 'dark' || getLocalStorage === 'dark') ? 'bg-slate-900' : 'bg-emerald-600'">
+     <div class="setting__icon--back flex p-3 px-8 text-white"
+     >
           <img class="w-5 cursor-pointer" 
                src="../../../../assets/left-arrow.svg" 
                alt="Back Icon"

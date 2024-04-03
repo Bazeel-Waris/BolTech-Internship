@@ -1,9 +1,10 @@
-<div class="max-h-[80vh] overflow-y-auto border-red-600">
-     <!-- <app-chat-card #chatCard (click)="displayChat($event)" *ngFor="let person of userService.users" [person]="person"></app-chat-card>      -->
-     <!-- <ng-container *ngIf="searchContactName"> -->
-          <app-chat-card (click)="onClickChatCard(person)" [person]="person" *ngFor="let person of filteredUsers">
-          </app-chat-card>
-     <!-- </ng-container> -->
-
-     
+<div class="max-h-[81vh] overflow-y-auto"
+     [ngClass]="(selectedThemeMode === 'dark' || getLocalStorage === 'dark') ? 'bg-slate-900' : ''">
+     <app-chat-card 
+          (click)="onClickChatCard(person)" 
+          [person]="person" 
+          *ngFor="let person of filteredUsers"
+          [selectedThemeMode]="selectedThemeMode"
+     >
+     </app-chat-card>     
 </div>

@@ -11,8 +11,7 @@ export class HeaderComponent {
      @Input()
      openChat: User;
 
-     ngOnChanges() {
-          // console.log(this.openChat);
-     }
+     @Input() selectedThemeMode: string = '';
+     getLocalStorage: string = localStorage.getItem('themeMode');
      
 }

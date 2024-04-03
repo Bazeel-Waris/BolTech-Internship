@@ -1,7 +1,17 @@
-<div class="container xl min-h-[100vh] border-green-500 border-0">
-     <app-header [openChat]="userChat"></app-header>
+<div class="container xl min-h-[100vh]"
+     [ngClass]="(selectedThemeMode === 'dark' || getLocalStorage === 'dark') ? 'dark_container' : 'container'">
+     <app-header 
+          *ngIf="userChat"
+          [openChat]="userChat"
+          [selectedThemeMode]="selectedThemeMode"
+     ></app-header>
      <div class="flex justify-between min-h-[91vh] flex-col">
-          <app-chat-board [openChat]="userChat"></app-chat-board>
-          <app-text-field></app-text-field>
+          <app-chat-board [openChat]="userChat"
+               [selectedThemeMode]="selectedThemeMode"
+          ></app-chat-board>
+          <app-text-field 
+               [selectedThemeMode]="selectedThemeMode"
+               *ngIf="userChat"
+          ></app-text-field>
      </div>
 </div>

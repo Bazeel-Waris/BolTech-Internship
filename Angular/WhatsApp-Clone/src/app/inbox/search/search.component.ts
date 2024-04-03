@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-search',
@@ -8,6 +8,9 @@ import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular
 export class SearchComponent {
      searchIcon: string = '../../assets/search.svg'
      
+     @Input() selectedThemeMode: string = '';
+     getLocalStorage: string = localStorage.getItem('themeMode');
+     
      @ViewChild('searchedContact')
      searchedContact: ElementRef;
 
@@ -16,7 +19,6 @@ export class SearchComponent {
 
      searchingContact() {
           this.onSearchingContact.emit(this.searchedContact.nativeElement.value);
-          // console.log(this.searchedContact.nativeElement.value);
      }
 
      changeIcon(){

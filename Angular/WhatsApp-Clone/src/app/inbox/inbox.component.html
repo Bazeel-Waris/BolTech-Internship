@@ -1,18 +1,29 @@
-<div class="inbox__container h-screen container border-0 border-black ">
+<div class="inbox__container h-screen container"
+[ngClass]="(selectedThemeMode === 'dark' || getLocalStorage === 'dark') ? 'bg-slate-900' : ''"     
+>
      <app-top-menu 
           (onClickSettingIcon)="openSetting($event)"
           *ngIf="!setting">
      </app-top-menu>
      <app-search 
           (onSearchingContact)="getSearchedName($event)"
-          *ngIf="!setting">
+          *ngIf="!setting"
+          [selectedThemeMode]="selectedThemeMode">
      </app-search>
+
+     <!-- list of chats are displaying -->
      <app-chat-list 
           (openChatClicked)="getClickedChat($event)" 
           [searchContactName]="searchedContactName"
-          *ngIf="!setting">
+          *ngIf="!setting"
+          [selectedThemeMode]="selectedThemeMode">
      </app-chat-list>
 
-     <app-setting *ngIf="setting" (onClickCloseBtn)="closeSetting($event)"></app-setting>
+     <!-- Setting Component -->
+     <app-setting 
+          *ngIf="setting" 
+          (onClickCloseBtn)="closeSetting($event)"
+          (onChangeMode)="changeMode($event)"
+     ></app-setting>
 </div>
 

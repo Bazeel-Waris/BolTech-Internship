@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-setting-top',
@@ -7,8 +7,13 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class SettingTopComponent {
 
+     getLocalStorage: string = localStorage.getItem('themeMode');
+     
      @Output() 
      onClickCloseSetting: EventEmitter<boolean> = new EventEmitter<boolean>();
+     
+     @Input()
+     selectedThemeMode: string = ''
 
      clickCloseSetting() {
           this.onClickCloseSetting.emit(false);

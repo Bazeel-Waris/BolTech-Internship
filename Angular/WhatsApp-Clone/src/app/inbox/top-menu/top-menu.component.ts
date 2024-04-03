@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-top-menu',
@@ -6,12 +6,13 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrls: ['./top-menu.component.scss']
 })
 export class TopMenuComponent {
-     // setting: boolean = false;
+
+     @Input() selectedThemeMode: string = '';
+     getLocalStorage: string = localStorage.getItem('themeMode');
 
      @Output() onClickSettingIcon: EventEmitter<boolean> = new EventEmitter<boolean>();
 
      clickSetting() {
-          // this.setting = true;
           this.onClickSettingIcon.emit(true)
      }
 }
