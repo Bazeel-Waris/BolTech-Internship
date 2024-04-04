@@ -18,7 +18,6 @@ export class SettingComponent {
      }
 
      getModeValue(modeValue: string) {
-          console.log('Main Setting ' + modeValue);
           this.selectedThemeMode = modeValue;
           this.onChangeMode.emit(modeValue);
      }

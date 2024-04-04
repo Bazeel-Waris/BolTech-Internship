@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { User } from 'src/app/Models/User';
 
 @Component({
@@ -6,12 +6,17 @@ import { User } from 'src/app/Models/User';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnChanges{
 
      @Input()
      openChat: User;
 
      @Input() selectedThemeMode: string = '';
-     getLocalStorage: string = localStorage.getItem('themeMode');
+     getLocalStorage: string = '';
+     
+     ngOnChanges() {
+          // console.log('selectedThemeMode of Top-Header-Chat ' + this.selectedThemeMode);
+          this.getLocalStorage = localStorage.getItem('themeMode');
+     }
      
 }

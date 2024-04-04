@@ -10,13 +10,14 @@ import { User } from 'src/app/Models/User';
 export class MessageCardComponent implements OnChanges{
 
      @Input() selectedThemeMode: string = '';
-     getLocalStorage: string = localStorage.getItem('themeMode');
+     getLocalStorage: string = '';
 
      @Input()
      message;
 
      ngOnChanges(changes: SimpleChanges): void {
           console.log(this.message.writtenByMe);
-          
+          this.getLocalStorage = localStorage.getItem('themeMode');
+          console.log(this.getLocalStorage);
      }
 }

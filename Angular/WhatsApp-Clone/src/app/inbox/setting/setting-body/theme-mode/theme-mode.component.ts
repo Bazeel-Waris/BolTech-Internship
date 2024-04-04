@@ -19,19 +19,21 @@ export class ThemeModeComponent {
           this.onClosePopUp.emit(false);
      }
 
-     selectedThemeMode: string = '';
-     recievedValue:string;
+     selectedThemeMode: string = 'light';
+     recievedValue: string;
 
-     save(e:any){
-          let value = e.target.value;
+     save(event: any){
+          let value = event.target.value;
+          console.log(value);
           if(value){
                this.recievedValue = value;
           }
      }
 
      changeMode() {
-          this.selectedThemeMode = this.recievedValue;          
+          this.selectedThemeMode = this.recievedValue;       
           this.onClosePopUp.emit(false);
+          // Would get undefined Value if user don't save the mode setting after opening the popUp
           this.onChangeMode.emit(this.selectedThemeMode);
           if(localStorage.getItem('themeMode')) {
                localStorage.removeItem('themeMode');
