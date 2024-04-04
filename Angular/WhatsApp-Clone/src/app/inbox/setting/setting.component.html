@@ -2,4 +2,5 @@
      (onClickCloseSetting)="clickCloseBtn($event)"
      [selectedThemeMode]="selectedThemeMode"
      ></app-setting-top>
-<app-setting-body (onChangeModeSetting)="getModeValue($event)"></app-setting-body>
+<app-setting-body (onChangeModeSetting)="getModeValue($event)"
+[selectedThemeMode]="selectedThemeMode" ></app-setting-body>

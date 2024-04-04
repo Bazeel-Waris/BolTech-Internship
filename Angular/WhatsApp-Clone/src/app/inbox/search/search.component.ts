@@ -1,15 +1,21 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss']
 })
-export class SearchComponent {
+export class SearchComponent implements OnChanges{
      searchIcon: string = '../../assets/search.svg'
      
      @Input() selectedThemeMode: string = '';
-     getLocalStorage: string = localStorage.getItem('themeMode');
+     getLocalStorage: string = '';
+     
+     ngOnChanges(changes: SimpleChanges): void {
+          this.getLocalStorage = localStorage.getItem('themeMode');
+          console.log(this.getLocalStorage);
+          this.selectedThemeMode = this.getLocalStorage;
+     }
      
      @ViewChild('searchedContact')
      searchedContact: ElementRef;
@@ -36,4 +42,5 @@ export class SearchComponent {
                this.onSearchingContact.emit(this.searchedContact.nativeElement.value);
           }
      }
+
 }

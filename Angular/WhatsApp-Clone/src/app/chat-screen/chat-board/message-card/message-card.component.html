@@ -1,5 +1,5 @@
 <div class="relative px-3 py-2 rounded-lg max-w-[35vw] my-2" 
-[ngClass]="((selectedThemeMode === 'dark' || getLocalStorage) === 'dark' && !message.writtenByMe) ? ['bg-slate-900', 'text-slate-100'] : 'bg-white'"
+[ngClass]="((selectedThemeMode === 'dark' || getLocalStorage === 'dark') && !message.writtenByMe) ? ['bg-slate-900', 'text-slate-100'] : 'bg-white'"
 [ngClass]="message.writtenByMe ? ['send', 'text-slate-100'] : 'bg-white'"
 >
      <p class="mb-4">{{message.messageText}} </p>

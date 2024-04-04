@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { User } from '../Models/User';
 
 @Component({
@@ -6,15 +6,19 @@ import { User } from '../Models/User';
   templateUrl: './inbox.component.html',
   styleUrls: ['./inbox.component.scss']
 })
-export class InboxComponent {
+export class InboxComponent implements OnChanges {
      
      searchedContactName: string = '';
      setting: boolean = false;
 
      // To Get value of Theme Mode
      selectedThemeMode: string = '';
-     getLocalStorage: string = localStorage.getItem('themeMode');
+     getLocalStorage: string = '';
      
+     ngOnChanges(changes: SimpleChanges): void {
+          this.getLocalStorage = localStorage.getItem('themeMode');
+     }
+
      @Output()
      openChatToApp: EventEmitter<User> = new EventEmitter<User>();
 

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-setting-body',
@@ -8,8 +8,8 @@ import { Component, EventEmitter, OnChanges, Output, SimpleChanges } from '@angu
 export class SettingBodyComponent implements OnChanges {
      popUp: boolean = false;
 
-     selectedThemeMode: string = '';
-     getLocalStorage: string = localStorage.getItem('themeMode');
+     @Input() selectedThemeMode: string = '';
+     getLocalStorage: string = '';
      
      
      @Output()
@@ -24,9 +24,8 @@ export class SettingBodyComponent implements OnChanges {
           this.onChangeModeSetting.emit(this.selectedThemeMode)
      }
 
-     ngOnChanges(changes: SimpleChanges): void {
+     ngOnChanges(): void {
           this.getLocalStorage = localStorage.getItem('themeMode');
-          console.log('LocalStorage Setting Body ' + this.getLocalStorage);
-          
+          // console.log('LocalStorage Setting Body ' + this.getLocalStorage);
      }
 }

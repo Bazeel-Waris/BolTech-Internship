@@ -5,9 +5,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
   templateUrl: './theme-mode.component.html',
   styleUrls: ['./theme-mode.component.scss']
 })
-export class ThemeModeComponent {
-
-     getLocalStorage: string = localStorage.getItem('themeMode');
+export class ThemeModeComponent implements OnChanges{
      
      @Output()
      onClosePopUp: EventEmitter<boolean> = new EventEmitter<boolean>();
@@ -19,12 +17,16 @@ export class ThemeModeComponent {
           this.onClosePopUp.emit(false);
      }
 
-     selectedThemeMode: string = 'light';
+     selectedThemeMode: string = '';
      recievedValue: string;
+     getLocalStorage: string = '';
+
+     ngOnChanges(changes: SimpleChanges): void {
+          // this.getLocalStorage = localStorage.getItem('themeMode');
+     }
 
      save(event: any){
           let value = event.target.value;
-          console.log(value);
           if(value){
                this.recievedValue = value;
           }
@@ -33,11 +35,12 @@ export class ThemeModeComponent {
      changeMode() {
           this.selectedThemeMode = this.recievedValue;       
           this.onClosePopUp.emit(false);
+
           // Would get undefined Value if user don't save the mode setting after opening the popUp
           this.onChangeMode.emit(this.selectedThemeMode);
           if(localStorage.getItem('themeMode')) {
                localStorage.removeItem('themeMode');
-          }
+          } 
           localStorage.setItem('themeMode', this.selectedThemeMode);
      }
 

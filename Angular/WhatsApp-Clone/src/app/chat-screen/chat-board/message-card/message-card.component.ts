@@ -16,8 +16,8 @@ export class MessageCardComponent implements OnChanges{
      message;
 
      ngOnChanges(changes: SimpleChanges): void {
-          console.log(this.message.writtenByMe);
+          // console.log(this.message.writtenByMe);
           this.getLocalStorage = localStorage.getItem('themeMode');
-          console.log(this.getLocalStorage);
+          // console.log(this.getLocalStorage);
      }
 }
